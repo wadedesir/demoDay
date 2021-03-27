@@ -10,7 +10,14 @@ if (port == null || port == "") {
   port = 8080;
 }
 
-const morgan = require('morgan')
+const mongoose = require('mongoose');
+const passport = require('passport');
+const flash    = require('connect-flash');
+
+const morgan       = require('morgan');
+const cookieParser = require('cookie-parser');
+const session      = require('express-session');
+
 const configDB = require('./config/database.js');
 const setupRoutes = require('./app/routes.js')
 
@@ -18,7 +25,7 @@ let db
 
 // configuration ===============================================================
 app.use(bodyParser.urlencoded({ extended: true }))
-
+setupRoutes(app)
 // set up our express application
 app.use(morgan('dev')); // log every request to the console
 app.use(cookieParser()); // read cookies (needed for auth)
@@ -31,6 +38,7 @@ app.use(express.static('public'))
 
 app.set('view engine', 'ejs'); // set up ejs for templating
 
+app.use(flash()); // use connect-flash for flash messages stored in session
 // launch ======================================================================
 app.listen(port);
 console.log('The magic happens on port ' + port);
