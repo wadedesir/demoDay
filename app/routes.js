@@ -8,10 +8,71 @@ function setupRoutes(app, passport) {
 
   // show the home page (will also have our login links)
   app.get('/', function (req, res) {
+    if (req.user) {
+    // logged in
+    console.log(req.user);
+    res.render('index.ejs', { user: req.user });
+    } else {
+    // not logged in
     res.render('index.ejs');
+    }
+    // res.render('index.ejs');
   });
 
+  app.get('/index.html', function (req, res) {
+    if (req.user) {
+    // logged in
+    res.render('index.ejs', { user: req.user });
+    } else {
+    // not logged in
+    res.render('index.ejs');
+    }
 
+  });
+
+  // app.get('/onboarding', isLoggedIn, function (req, res) {
+  //   res.render('index.ejs');
+  // });
+
+  app.get('/onboarding', function (req, res) {
+    if (req.user) {
+      if (req.user.setup == 1) {
+      // logged in
+      res.render('index.ejs');
+      } else {
+      // not logged in
+      res.render('onboarding.ejs');
+      }
+    }else {
+    // not logged in
+    res.render('onboarding.ejs');
+    }
+
+
+  });
+
+  app.post('/Onboarding', isLoggedIn, async function (req, res) {
+    const request = req.body
+    const moodData = {listen: request.userMusic, usage: request.usage, triggers : request.userChoice}
+    const name = {first: request.firstName, last: request.lastName}
+    const age = request.age
+    console.log(moodData, name, age);
+
+    const user = await User.findById(req.user._id)
+    user.moodData = moodData
+    user.name = name
+    user.age = age
+    user.setup = 1
+
+    console.log(req.body);
+    const result = await user.save()
+    // res.json({ user: result })
+
+    .then(result => {
+      res.redirect('/')
+    })
+    .catch(error => console.error(error))
+  });
   // LOGOUT ==============================
   app.get('/logout', function (req, res) {
     req.logout();
@@ -31,7 +92,7 @@ function setupRoutes(app, passport) {
 
   // process the login form
   app.post('/login', passport.authenticate('local-login', {
-    successRedirect: '/', // redirect to the secure profile section
+    successRedirect: '/onboarding', // redirect to the secure profile section
     failureRedirect: '/login', // redirect back to the signup page if there is an error
     failureFlash: true // allow flash messages
   }));
@@ -44,7 +105,7 @@ function setupRoutes(app, passport) {
 
   // process the signup form
   app.post('/signup', passport.authenticate('local-signup', {
-    successRedirect: '/', // redirect to the secure profile section
+    successRedirect: '/onboarding', // redirect to the secure profile section
     failureRedirect: '/signup', // redirect back to the signup page if there is an error
     failureFlash: true // allow flash messages
   }));

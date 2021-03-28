@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta content="width=device-width, initial-scale=1.0" name="viewport">
+
+  <title>Onboarding</title>
+  <meta content="" name="description">
+  <meta content="" name="keywords">
+
+  <!-- Favicons -->
+  <link href="assets/img/favicon.png" rel="icon">
+  <link href="assets/img/apple-touch-icon.png" rel="apple-touch-icon">
+
+  <!-- Google Fonts -->
+  <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i|Montserrat:300,300i,400,400i,500,500i,600,600i,700,700i|Poppins:300,300i,400,400i,500,500i,600,600i,700,700i" rel="stylesheet">
+
+  <!-- Vendor CSS Files -->
+  <link href="assets/vendor/aos/aos.css" rel="stylesheet">
+  <link href="assets/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+  <link href="assets/vendor/bootstrap-icons/bootstrap-icons.css" rel="stylesheet">
+  <link href="assets/vendor/boxicons/css/boxicons.min.css" rel="stylesheet">
+  <link href="assets/vendor/glightbox/css/glightbox.min.css" rel="stylesheet">
+  <link href="assets/vendor/remixicon/remixicon.css" rel="stylesheet">
+  <link href="assets/vendor/swiper/swiper-bundle.min.css" rel="stylesheet">
+
+  <!-- Template Main CSS File -->
+  <link href="assets/css/style.css" rel="stylesheet">
+  <link href="assets/css/login.css" rel="stylesheet">
+  <!-- =======================================================
+  * Template Name: Bootslander - v4.1.0
+  * Template URL: https://bootstrapmade.com/bootslander-free-bootstrap-landing-page-template/
+  * Author: BootstrapMade.com
+  * License: https://bootstrapmade.com/license/
+  ======================================================== -->
+</head>
+
+<body>
+
+  <!-- ======= Header ======= -->
+  <%- include('partials/header') %>
+  <!-- End Header -->
+
+  <main id="main">
+
+    <!-- ======= Breadcrumbs Section ======= -->
+    <section class="breadcrumbs">
+      <div class="container">
+
+        <div class="d-flex justify-content-between align-items-center">
+          <h2>Onboarding</h2>
+          <ol>
+            <li><a href="index.html">Home</a></li>
+            <li>Onboarding</li>
+          </ol>
+        </div>
+
+      </div>
+    </section><!-- End Breadcrumbs Section -->
+
+    <section class="inner-page">
+
+      <div class="container d-flex justify-content-center">
+        <!-- https://codepen.io/jeetgohil/pen/gdwVeV  template for form-->
+        <div class="col-lg-5 mt-5 mt-lg-0" data-aos="fade-left" data-aos-delay="200">
+
+          <form id="survey-form" action="/onboarding" method="post">
+            <div class="form-row">
+              <div class="col">
+                <label id="name-label">First Name</label>
+                <input id="name" name="firstName" type="name" class="form-control" placeholder="First name" required>
+              </div>
+              <div class="col">
+                <label for="formGroupExampleInput">Last Name</label>
+                <input id="last-name" name="lastName" type="name" class="form-control" placeholder="Last name" required>
+              </div>
+            </div>
+            <!-- <br/> -->
+            <div class="form-group">
+              <label id="number-label">Your age</label>
+              <input id="number" name="age" type="number" min="10" max="125" class="form-control" id="number" placeholder="Age" required>
+            </div>
+            <div class="form-group">
+              <label for="exampleFormControlSelect2">I mainly listen to:</label>
+              <select class="form-control" id="dropdown" name="userMusic">
+                <option>Pop Music</option>
+                <option>Secondary Eduction</option>
+                <option>Bachelors Degree</option>
+                <option>Masters</option>
+                <option>PHd</option>
+              </select>
+            </div>
+            <hr>
+            <div class="radiobuttons">
+              <p>I want to use Moodchime to:</p>
+              <ul style="list-style: none;">
+                <li class="radio"><input name="usage" value="relax" type="radio" class="usage"><label> Relax/Meditate</label></li>
+                <li class="radio"><input name="usage" value="stabilize" type="radio" class="usage"><label> Help stabilize my mood</label></li>
+                <li class="radio"><input name="usage" value="trauma" type="radio" class="usage"><label> Help me cope with trauma</label></li>
+                <li class="radio"><input name="usage" value="focus" type="radio" class="usage"><label> Increase focus skills</label></li>
+                <li class="radio"><input name="usage" value="music" type="radio" class="usage"><label> Listen to some good music</label></li>
+              </ul>
+            </div>
+            <div>
+              <p>Do you struggle with any of these? (select all that apply)</p>
+              <ul class="checkboxlabel">
+                <li class="checkbox" style="list-style: none;"><label> <input name="userChoice" value="1" type="checkbox" class="userChoice">Anxiety</label></li>
+                <li class="checkbox" style="list-style: none;"><label> <input name="userChoice" value="2" type="checkbox" class="userChoice">Depression</label></li>
+                <li class="checkbox" style="list-style: none;"><label> <input name="userChoice" value="3" type="checkbox" class="userChoice">Focus</label></li>
+                <li class="checkbox" style="list-style: none;"><label> <input name="userChoice" value="4" type="checkbox" class="userChoice">Panic Attacks</label></li>
+              </ul>
+            </div>
+            <br />
+            <div>
+              <button id="submit" type="submit" class="rainbow" style="float:right">Submit</button>
+            </div>
+          </form>
+        </div>
+      </div>
+
+    </section>
+
+  </main><!-- End #main -->
+
+  <!-- ======= Footer ======= -->
+<%- include('partials/footer') %>
+<!-- End Footer -->
+
+  <a href="#" class="back-to-top d-flex align-items-center justify-content-center"><i class="bi bi-arrow-up-short"></i></a>
+  <div id="preloader"></div>
+
+  <!-- Vendor JS Files -->
+  <script src="assets/vendor/aos/aos.js"></script>
+  <script src="assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+  <script src="assets/vendor/glightbox/js/glightbox.min.js"></script>
+  <script src="assets/vendor/php-email-form/validate.js"></script>
+  <script src="assets/vendor/purecounter/purecounter.js"></script>
+  <script src="assets/vendor/swiper/swiper-bundle.min.js"></script>
+
+  <!-- Template Main JS File -->
+  <script src="assets/js/main.js"></script>
+
+</body>
+
+</html>
