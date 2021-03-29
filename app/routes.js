@@ -39,7 +39,7 @@ function setupRoutes(app, passport) {
     if (req.user) {
       if (req.user.setup == 1) {
       // logged in
-      res.redirect('/')
+      res.redirect('/user')
       // res.render('index.ejs', { loggedIn: true, user: req.user.name.first});
       } else {
       // not logged in
@@ -71,7 +71,7 @@ function setupRoutes(app, passport) {
     // res.json({ user: result })
 
     .then(result => {
-      res.redirect('/')
+      res.redirect('/user')
     })
     .catch(error => console.error(error))
   });
