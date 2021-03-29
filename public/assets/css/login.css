@@ -68,7 +68,7 @@ main{
   /* height: 80%; */
 }
 .rainbow:hover{
-  background: linear-gradient(-45deg, blue, white, blue, skyblue);
+  background: #12cbc4;
   background-size: 400% 400%;
   animation: gradient 2s ease infinite;
   color: white;

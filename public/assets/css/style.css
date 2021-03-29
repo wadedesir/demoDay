@@ -418,7 +418,7 @@ h1, h2, h3, h4, h5, h6 {
 #hero:before {
   content: "";
   /* background: rgba(2, 5, 161, 0.91); */
-  background: whitesmoke;
+  background: #e1f4f3;
   position: absolute;
   bottom: 0;
   top: 0;
@@ -1540,7 +1540,7 @@ section {
 # Footer
 --------------------------------------------------------------*/
 #footer {
-  background: #010351;
+  background: #12cbc4;
   padding: 0 0 30px 0;
   color: #fff;
   font-size: 14px;
@@ -1782,7 +1782,20 @@ section {
   /* border-right: 2px solid black; */
 }
 
+.signupButton button{
+  margin-top: 3%;
+  border: none;
+  background-color: #12cbc4;
+  width: 150px;
+  height: 50px;
+  color: white;
+  font-weight: bold;
+  border-radius: 20px;
+}
 
+.signupButton button:hover{
+  background-color: #12d0d4;
+}
 @keyframes gradient {
 	0% {
 		background-position: 0% 50%;
