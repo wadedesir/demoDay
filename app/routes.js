@@ -11,10 +11,10 @@ function setupRoutes(app, passport) {
     if (req.user) {
     // logged in
     console.log(req.user);
-    res.render('index.ejs', { user: req.user });
+    res.render('index.ejs', { loggedIn: true, user: req.user.name.first });
     } else {
     // not logged in
-    res.render('index.ejs');
+    res.render('index.ejs', { loggedIn: false, user: '' });
     }
     // res.render('index.ejs');
   });
@@ -22,10 +22,11 @@ function setupRoutes(app, passport) {
   app.get('/index.html', function (req, res) {
     if (req.user) {
     // logged in
-    res.render('index.ejs', { user: req.user });
+    console.log(req.user);
+    res.render('index.ejs', { loggedIn: true, user: req.user.name.first });
     } else {
     // not logged in
-    res.render('index.ejs');
+    res.render('index.ejs', { loggedIn: false, user: '' });
     }
 
   });
@@ -38,14 +39,15 @@ function setupRoutes(app, passport) {
     if (req.user) {
       if (req.user.setup == 1) {
       // logged in
-      res.render('index.ejs');
+      res.redirect('/')
+      // res.render('index.ejs', { loggedIn: true, user: req.user.name.first});
       } else {
       // not logged in
-      res.render('onboarding.ejs');
+      res.render('onboarding.ejs', {loggedIn: true, user: ''});
       }
     }else {
     // not logged in
-    res.render('onboarding.ejs');
+    res.render('onboarding.ejs', {loggedIn: false, user: ''});
     }
 
 
@@ -73,6 +75,11 @@ function setupRoutes(app, passport) {
     })
     .catch(error => console.error(error))
   });
+
+
+  app.get('/user', isLoggedIn, async function (req, res) {
+    res.render('user.ejs', { loggedIn: true, user: req.user.name.first });
+  })
   // LOGOUT ==============================
   app.get('/logout', function (req, res) {
     req.logout();
@@ -87,7 +94,7 @@ function setupRoutes(app, passport) {
   // LOGIN ===============================
   // show the login form
   app.get('/login', function (req, res) {
-    res.render('login.ejs', { message: req.flash('loginMessage') });
+    res.render('login.ejs', { message: req.flash('loginMessage'), loggedIn: false, user: ''});
   });
 
   // process the login form
@@ -100,7 +107,7 @@ function setupRoutes(app, passport) {
   // SIGNUP =================================
   // show the signup form
   app.get('/signup', function (req, res) {
-    res.render('signup.ejs', { message: req.flash('signupMessage') });
+    res.render('signup.ejs', { message: req.flash('signupMessage'), loggedIn: false, user: '' });
   });
 
   // process the signup form

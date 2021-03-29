@@ -208,6 +208,7 @@ h1, h2, h3, h4, h5, h6 {
   transition: all 0.3s ease-in-out 0s;
 }
 
+
 .navbar a:hover:before, .navbar li:hover > a:before, .navbar .active:before {
   visibility: visible;
   width: 25px;
@@ -216,6 +217,20 @@ h1, h2, h3, h4, h5, h6 {
 .navbar a:hover, .navbar .active, .navbar li:hover > a {
   color: #fff;
 }
+
+/* .navbar > ul > li > #userName:before {
+  content: "";
+  position: absolute;
+  width: 0;
+  height: 2px;
+  bottom: 3px;
+  left: 30px;
+  background-color: red;
+  visibility: visible;
+  width: 0px;
+
+  transition: all 0.3s ease-in-out 0s;
+} */
 
 .navbar .dropdown ul {
   display: block;
@@ -389,7 +404,11 @@ h1, h2, h3, h4, h5, h6 {
 --------------------------------------------------------------*/
 #hero {
   width: 100%;
-  background: url("../img/hero-bg.jpg");
+  /* background: url("../img/hero-bg.jpg"); */
+  background: url("https://cdn.shortpixel.ai/client/q_glossy,ret_img,w_2000,h_2000/https://gifsoutloud.com/wp-content/uploads/2020/03/giphy-9.gif");
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: center;
   position: relative;
   padding: 120px 0 0 0;
   /* height: 100vh; */
@@ -1671,10 +1690,73 @@ section {
   }
 }
 
+/* Play Cards: https://codepen.io/donhovanndesign/pen/YzXzPXZ */
 
+.favorites{
+  height: 50px;
+  width: 100%;
+  background-color: skyblue;
+}
 
+.userPage{
+  margin-top: 5%;
+  width: 100%;
+}
 
+.userPage > div{
+  border: 1px solid black;
+  height: 72vh;
+}
 
-.userName{
-  font-weight: bold;
+.userPage section{
+  border: 1px solid black;
+  height: 85%;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  align-items: center;
+}
+.userPage h3{
+  border: 1px solid black;
+  display: inline-block;
+  margin-left: 0;
+  /* width: 10%; */
+}
+
+.playCard{
+  border: 1px solid black;
+  width: 70%;
+  height: 50%;
+  display: block;
+  margin-bottom: 1%;
+
+  background: #FFFFFF;
+  /* margin-top: 50px; */
+  -webkit-transition: all 0.2s ease-in;
+  -moz-transition: all 0.2s ease-in;
+  -ms-transition: all 0.2s ease-in;
+  -o-transition: all 0.2s ease-in;
+  transition: all 0.2s ease-in;
+  box-shadow: 0px 3px 4px rgba(0, 0, 0, 0.40);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  font-size: 20px;
+}
+
+.playCard:hover{
+  background: #fff;
+  box-shadow: 0px 15px 26px rgba(0, 0, 0, 0.50);
+  -webkit-transition: all 0.2s ease-in;
+  -moz-transition: all 0.2s ease-in;
+  -ms-transition: all 0.2s ease-in;
+  -o-transition: all 0.2s ease-in;
+  transition: all 0.2s ease-in;
+  /* font-weight: bold; */
+  /* margin-top: 50px; */
+}
+.playCard + .playCard{
+  margin-bottom: 0;
+  margin-top: 1%;
 }
