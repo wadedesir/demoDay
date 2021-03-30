@@ -3,7 +3,7 @@
 Moodchime is a personalized music therapy platform. Our aim is to help you to connect with yourself on a deeper level while simultaneously disconnecting from all the negative energy and experiences that may be surrounding you. Moodchime is here to help you relax, breathe, and focus.
 
 Link to project: https://moodchime.herokuapp.com/
-![Website Thumbnail](https://raw.githubusercontent.com/wadedesir/demoday/main/thumbnail.PNG)
+![Website Thumbnail](https://raw.githubusercontent.com/wadedesir/demoday/main/thumbnail.png)
 
 ## How It's Made:
 
