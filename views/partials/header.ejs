@@ -1,8 +1,8 @@
 <!-- views/partials/header.ejs -->
-<header id="header" class="fixed-top">
+<header id="header" class="fixed-top innerHeader">
   <div class="container d-flex align-items-center justify-content-lg-between">
 
-    <h1 class="logo me-auto me-lg-0"><a href="index.html">Moodchime<span>.</span></a></h1>
+    <h1 class="logo me-auto me-lg-0"><a href="index.html">duatone</a></h1>
     <!-- Uncomment below if you prefer to use an image logo -->
     <!-- <a href="index.html" class="logo me-auto me-lg-0"><img src="assets/img/logo.png" alt="" class="img-fluid"></a>-->
 
@@ -13,19 +13,20 @@
         <% } %>
         <li><a class="nav-link scrollto" href="/">Home</a></li>
         <li><a class="nav-link scrollto" href="/#about">About</a></li>
-        <li><a class="nav-link scrollto" href="/#faq">FAQ</a></li>
+        <li><a class="nav-link scrollto" href="/#faq">Features</a></li>
         <li><a class="nav-link scrollto" href="/#contact">Contact</a></li>
-        <% if(loggedIn) { %>
-          <li><a class="nav-link scrollto loginLink" href="/logout">Logout</a></li>
-        <% } else {%>
-          <li><a class="nav-link scrollto loginLink active" href="/login">Login</a></li>
-          <li><a class="nav-link scrollto loginLink" href="/signup">Signup</a></li>
-        <% } %>
       </ul>
       <i class="bi bi-list mobile-nav-toggle"></i>
     </nav><!-- .navbar -->
 
-    <a href="#about" class="get-started-btn scrollto">Get Started</a>
+    <div class="">
+      <% if(loggedIn) { %>
+        <a class="get-started-btn scrollto " href="/logout">Logout</a>
+      <% } else {%>
+        <a class="get-started-btn scrollto " href="/login">Login</a>
+        <a class="get-started-btn scrollto" href="/signup">Signup</a>
+      <% } %>
+    </div>
 
   </div>
 </header>
