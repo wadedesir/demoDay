@@ -96,7 +96,7 @@ h1, h2, h3, h4, h5, h6 {
   position: fixed;
   top: calc(50% - 0px);
   left: calc(50% - 30px);
-  border: 6px solidvar(--cc-1);
+  border: 6px solid var(--cc-1);
   border-top-color: #151515;
   border-bottom-color: #151515;
   border-radius: 50%;
@@ -147,6 +147,7 @@ h1, h2, h3, h4, h5, h6 {
 #header.header-scrolled, #header.header-inner-pages {
   /* background: rgba(0, 0, 0, 0.8); */
   background: var(--cc-header);
+  /* color: black ; */
 }
 #header .logo {
   font-size: 42px;
@@ -176,18 +177,18 @@ h1, h2, h3, h4, h5, h6 {
 --------------------------------------------------------------*/
 .get-started-btn {
   color: #fff;
-  border-radius: 4px;
+  /* border-radius: 4px; */
   padding: 7px 25px 8px 25px;
   white-space: nowrap;
   transition: 0.3s;
   font-size: 14px;
   display: inline-block;
-  border: 2px solidvar(--cc-1);
+  border: 2px solid var(--cc-1);
 }
 
 .get-started-btn:hover {
-  background: #ffbb38;
-  color: #343a40;
+  background:  var(--cc-1);
+  color: white;
 }
 
 @media (max-width: 992px) {
@@ -239,7 +240,7 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 .navbar a:hover, .navbar .active, .navbar li:hover > a {
-  color:var(--cc-1);
+  color:var(--cc-1) !important;
 }
 
 .navbar .dropdown ul {
@@ -418,7 +419,7 @@ h1, h2, h3, h4, h5, h6 {
 
 #hero:before {
   content: "";
-  background: rgba(0, 0, 0, 0.6);
+  background: rgba(0, 0, 0, 0.4);
   position: absolute;
   bottom: 0;
   top: 0;
@@ -1031,11 +1032,13 @@ section {
   -webkit-text-fill-color: transparent;
 }
 
-#header.header-scrolled li a{
-  color: black;
+#main{
+    /* background: -webkit-linear-gradient(-45deg, #371238, var(--cc-1)); */
+    /* background:  whitesmoke; */
+    /* color: white; */
 }
-
-#header.header-scrolled .get-started-btn{
+.header-scrolled li a,
+.header-scrolled .get-started-btn{
   color: black;
 }
 
@@ -1046,6 +1049,52 @@ section {
 .innerHeader .get-started-btn{
   color: black;
 }
+.onboardingPage{
+  background: url("../img/colorfulbg.png");
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: center;
+}
+
+.btn-main{
+  color: #fff;
+  border-radius: 4px;
+  padding: 7px 25px 8px 25px;
+  white-space: nowrap;
+  transition: 0.3s;
+  font-size: 14px;
+  display: inline-block;
+  border: 1px solid var(--cc-1);
+}
+
+form .cred-btn{
+  margin-top: 3%;
+}
+
+form .cred-btn,
+.cred-btn{
+  background-color: white;
+  color: black;
+  width: clamp(7rem, 1vw + 1rem, 10rem);
+}
+
+.form-group input,
+.form-row input{
+	border:0;
+	height:50px;
+	border-radius:0;
+  border-bottom:1px solid lightgrey;
+  margin-bottom: 5%;
+}
+.form-group input:focus,
+.form-row input:focus{
+  border-bottom:1px solid var(--cc-1);
+  box-shadow:none;
+  outline:0;
+  background-color:#ebebeb;
+}
+
+
 .center {
   width: 180px;
   height: 60px;
@@ -1151,7 +1200,7 @@ svg {
 
 .playCard:hover{
   background: #fff;
-  box-shadow: 0px 15px 26px rgba(0, 0, 0, 0.50);
+  box-shadow: 0px 0px 10px rgba(255, 255, 255, 0.50);
   -webkit-transition: all 0.2s ease-in;
   -moz-transition: all 0.2s ease-in;
   -ms-transition: all 0.2s ease-in;
@@ -1163,6 +1212,7 @@ svg {
   background: linear-gradient(-45deg, #3f3d56, #9441fa, #12cbc4, #e92efb);
   background-size: 400% 400%;
   animation: gradient 5s ease infinite;
+  cursor: pointer;
 }
 .playCard + .playCard{
   margin-bottom: 0;

@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
-
+<!-- State of the art music player -->
 <head>
   <meta charset="utf-8">
   <meta content="width=device-width, initial-scale=1.0" name="viewport">
@@ -32,12 +32,6 @@
   <!-- Template Main CSS File -->
   <link href="assets/css/style.css" rel="stylesheet">
 
-  <!-- =======================================================
-  * Template Name: Gp - v4.1.0
-  * Template URL: https://bootstrapmade.com/gp-free-multipurpose-html-bootstrap-template/
-  * Author: BootstrapMade.com
-  * License: https://bootstrapmade.com/license/
-  ======================================================== -->
 </head>
 
 <body>
@@ -45,14 +39,14 @@
   <!-- ======= Header ======= -->
   <!-- ======= Header ======= -->
   <!-- views/partials/header.ejs -->
-  <header id="header" class="fixed-top d-flex align-items-center">
-    <div class="container d-flex align-items-center justify-content-between">
+  <header id="header" class="fixed-top ">
+    <div class="container d-flex align-items-center justify-content-lg-between">
 
       <h1 class="logo me-auto me-lg-0"><a href="index.html">duatone<span></span></a></h1>
       <!-- Uncomment below if you prefer to use an image logo -->
       <!-- <a href="index.html" class="logo me-auto me-lg-0"><img src="assets/img/logo.png" alt="" class="img-fluid"></a>-->
 
-      <nav id="navbar" class="navbar">
+      <nav id="navbar" class="navbar order-last order-lg-0">
         <ul>
           <% if(loggedIn) { %>
             <li><a class="nav-link scrollto" href="/user"><%= user %></a></li>
@@ -70,10 +64,10 @@
 
       <div class="">
         <% if(loggedIn) { %>
-          <a class="get-started-btn scrollto " href="/logout">Logout</a>
+          <a class="btn-main scrollto " href="/logout">Logout</a>
         <% } else {%>
           <a class="get-started-btn scrollto " href="/login">Login</a>
-          <a class="get-started-btn scrollto" href="/signup">Signup</a>
+          <!-- <a class="get-started-btn scrollto" href="/signup">Signup</a> -->
         <% } %>
       </div>
 
@@ -100,7 +94,7 @@
             <h3><a href="">Sedare</a></h3>
           </div> -->
           <div class="center">
-
+            <a href="#about">
             <button class="btn">
               <svg width="180px" height="60px" viewBox="0 0 180 60" class="border">
                 <polyline points="179,1 179,59 1,59 1,1 179,1" class="bg-line" />
@@ -108,6 +102,7 @@
               </svg>
               <span>Learn More</span>
             </button>
+            </a>
 
           </div>
         </div>
@@ -118,6 +113,7 @@
           </div> -->
           <div class="center">
 
+            <a href="/signup">
             <button class="btn">
               <svg width="180px" height="60px" viewBox="0 0 180 60" class="border">
                 <polyline points="179,1 179,59 1,59 1,1 179,1" class="bg-line" />
@@ -125,7 +121,7 @@
               </svg>
               <span>Sign Up</span>
             </button>
-
+            </a>
           </div>
         </div>
       </div>
@@ -186,7 +182,7 @@
               <li><i class="ri-check-double-line"></i> Ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate trideta storacalaperda mastiro dolore eu fugiat nulla pariatur.</li>
             </ul> -->
             <p>
-              Duatone is a personalized music therapy platform. Our aim is to help you to connect with yourself on a deeper level while simultaneously disconnecting from all the negative energy and experiences that may be surrounding you. Moodchime is here to help you relax, breathe, and focus.
+              Duatone is a personalized music therapy platform. Our aim is to help you to connect with yourself on a deeper level while simultaneously disconnecting from all the negative energy and experiences that may be surrounding you. duatone is here to help you relax, breathe, and focus.
             </p>
           </div>
         </div>
@@ -231,7 +227,7 @@
     </section><!-- End Features Section -->
 
     <!-- ======= Services Section ======= -->
-    <section id="services" class="services">
+    <!-- <section id="services" class="services">
       <div class="container" data-aos="fade-up">
 
         <div class="section-title">
@@ -291,7 +287,8 @@
         </div>
 
       </div>
-    </section><!-- End Services Section -->
+    </section> -->
+    <!-- End Services Section -->
 
     <!-- ======= Contact Section ======= -->
     <section id="contact" class="contact">

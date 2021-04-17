@@ -31,9 +31,9 @@ function setupRoutes(app, passport) {
 
   });
 
-  // app.get('/onboarding', isLoggedIn, function (req, res) {
-  //   res.render('index.ejs');
-  // });
+  app.get('/connect', isLoggedIn, function (req, res) {
+    res.render('connect.ejs', { loggedIn: true, user: req.user.name.first });
+  });
 
   app.get('/onboarding', function (req, res) {
     if (req.user) {
