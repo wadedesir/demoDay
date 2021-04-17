@@ -20,8 +20,15 @@ const session      = require('express-session');
 
 const configDB = require('./config/database.js');
 const setupRoutes = require('./app/routes.js')
+const SpotifyWebApi = require('spotify-web-api-node');
 
 let db
+
+const spotifyApi = new SpotifyWebApi({
+  clientId: '1f3c90c77fce4b60bd9e18d35175bd86',
+  clientSecret: '8758a46abe0a4ff2abb77245a9b64c2d',
+  redirectUri: 'https://moodchime.herokuapp.com/user'
+});
 
 // configuration ===============================================================
 app.use(bodyParser.urlencoded({ extended: true }))
@@ -53,6 +60,7 @@ app.use(session({
 app.use(passport.initialize());
 app.use(passport.session()); // persistent login sessions
 app.use(flash()); // use connect-flash for flash messages stored in session
+
 
 
 // launch ======================================================================
