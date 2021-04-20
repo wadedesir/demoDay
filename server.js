@@ -39,7 +39,11 @@ mongoose.connect(configDB.url, { useNewUrlParser: true, useUnifiedTopology: true
   setupRoutes(app, passport, SpotifyWebApi)
 }); // connect to our database
 
-// s
+// const spotifyApiServer = new SpotifyWebApi({
+//   clientId: '1f3c90c77fce4b60bd9e18d35175bd86',
+//   clientSecret: '8758a46abe0a4ff2abb77245a9b64c2d',
+//   redirectUri: 'http://moodchime.herokuapp.com/user'
+// });
 
 require('./config/passport')(passport); // pass passport for configuration
 
