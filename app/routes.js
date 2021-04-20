@@ -58,7 +58,6 @@ function setupRoutes(app, passport, SpotifyWebApi) {
     if (req.query.error){
       res.status(404).send(req.query.error)
     }else if (req.query.code){
-      const user = await User.findById(req.user._id)
 
       spotifyApiServer.authorizationCodeGrant(req.query.code).then(
         function(data) {
@@ -67,19 +66,19 @@ function setupRoutes(app, passport, SpotifyWebApi) {
           console.log('The refresh token is ' + data.body['refresh_token']);
       
           // Set the access token on the API object to use it in later calls
-          spotifyServer.setAccessToken(data.body['access_token']);
-          spotifyServer.setRefreshToken(data.body['refresh_token']);
-
-          //query token information to be saved to the server
-          user.security.accessToken = data.body['access_token']
-          user.security.refreshToken = data.body['refresh_token']
-          user.setup = 2 //so new token is not created.
+          spotifyApiServer.setAccessToken(data.body['access_token']);
+          spotifyApiServer.setRefreshToken(data.body['refresh_token']);
         },
         function(err) {
           console.log('Something went wrong!', err);
         }
       );
 
+      const user = await User.findById(req.user._id) //grab current user
+      //query token information to be saved to the server
+      user.security.accessToken = spotifyApiServer.getAccessToken()
+      user.security.refreshToken = spotifyApiServer.getRefreshToken()
+      user.setup = 2 //so new token is not created.
       const result = await user.save() //actually save the data
     
       .then(result => {
