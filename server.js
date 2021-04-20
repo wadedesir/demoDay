@@ -28,7 +28,7 @@ let db
 
 //generate spotify auth url for user
 const scopes = ['user-read-private', 'user-read-email', 'user-read-recently-played', 'user-top-read', 'user-modify-playback-state', 'user-follow-read', 'user-library-modify', 'user-library-read', 'streaming'],
-redirectUri = 'http://moodchime.heroku.app',
+redirectUri = 'http://moodchime.heroku.app/user',
 clientId = '1f3c90c77fce4b60bd9e18d35175bd86',
 state = 'test';
 
@@ -57,7 +57,7 @@ mongoose.connect(configDB.url, { useNewUrlParser: true, useUnifiedTopology: true
 const spotifyApiServer = new SpotifyWebApi({
   clientId: '1f3c90c77fce4b60bd9e18d35175bd86',
   clientSecret: '8758a46abe0a4ff2abb77245a9b64c2d',
-  redirectUri: 'https://moodchime.herokuapp.com/user'
+  redirectUri: 'http://moodchime.heroku.app/user'
 });
 
 require('./config/passport')(passport); // pass passport for configuration
