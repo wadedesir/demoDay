@@ -82,7 +82,7 @@ function setupRoutes(app, passport, SpotifyWebApi) {
       const result = await user.save() //actually save the data
     
       .then(result => {
-        res.send("data: " + result)
+        res.redirect('/user')
       })
       .catch(error => console.error(error))
 
