@@ -58,8 +58,10 @@ function setupRoutes(app, passport, SpotifyWebApi) {
     if (req.query.error){
       res.status(404).send(req.query.error)
     }else if (req.query.code){
+      const user = await User.findById(req.user._id)
+
       spotifyApiServer.authorizationCodeGrant(req.query.code).then(
-        async function(data) {
+        function(data) {
           console.log('The token expires in ' + data.body['expires_in']);
           console.log('The access token is ' + data.body['access_token']);
           console.log('The refresh token is ' + data.body['refresh_token']);
@@ -68,17 +70,23 @@ function setupRoutes(app, passport, SpotifyWebApi) {
           spotifyServer.setAccessToken(data.body['access_token']);
           spotifyServer.setRefreshToken(data.body['refresh_token']);
 
-          //save token information to the server
-          const user = await User.findById(req.user._id)
+          //query token information to be saved to the server
           user.security.accessToken = data.body['access_token']
           user.security.refreshToken = data.body['refresh_token']
 
-          res.status(404).send(data)
         },
         function(err) {
           console.log('Something went wrong!', err);
         }
       );
+
+      const result = await user.save() //actually save the data
+    
+      .then(result => {
+        res.status(404).send("data:", result)
+      })
+      .catch(error => console.error(error))
+
     }else{
       res.render('connect.ejs', { loggedIn: true, user: req.user.name.first, spotifyUrl: authorizeURL });
     }
@@ -130,7 +138,7 @@ function setupRoutes(app, passport, SpotifyWebApi) {
     user.age = age
     user.setup = 1
 
-    console.log(req.body);
+    // console.log(req.body);
     const result = await user.save()
     // res.json({ user: result })
 
