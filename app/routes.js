@@ -11,7 +11,7 @@ function setupRoutes(app, passport, SpotifyWebApi) {
   });
 
   //generate spotify auth url for user
-  const scopes = ['user-read-private', 'user-read-email', 'user-read-recently-played', 'user-top-read', 'user-modify-playback-state', 'user-follow-read', 'user-library-modify', 'user-library-read', 'streaming'],
+  const scopes = ['user-read-private', 'user-read-email', 'user-read-recently-played', 'user-top-read', 'user-modify-playback-state', 'user-follow-read', 'user-library-modify', 'user-library-read', 'streaming', 'user-read-playback-state'],
   redirectUri = 'http://moodchime.herokuapp.com/connect',
   clientId = '1f3c90c77fce4b60bd9e18d35175bd86',
   state = 'duanote';
@@ -26,6 +26,39 @@ function setupRoutes(app, passport, SpotifyWebApi) {
   const authorizeURL = spotifyApiUser.createAuthorizeURL(scopes, state);
   // https://accounts.spotify.com:443/authorize?client_id=5fe01282e44241328a84e7c5cc169165&response_type=code&redirect_uri=https://example.com/callback&scope=user-read-private%20user-read-email&state=some-state-of-my-choice
 
+  app.get('/pause', isLoggedIn, function (req, res) {   
+
+    spotifyApiServer.getMyDevices()
+  .then(function(data) {
+    let availableDevices = data.body.devices;
+    console.log(availableDevices);
+  }, function(err) {
+    console.log('Something went wrong!', err);
+  });
+
+    spotifyApiServer.pause()
+    .then(function() {
+      console.log('Playback paused');
+    }, function(err) {
+      //if the user making the request is non-premium, a 403 FORBIDDEN response code will be returned
+      console.log('Something went wrong!', err);
+    });
+
+  })
+
+  app.get('/play', isLoggedIn, function (req, res) {   
+
+    spotifyApiServer.play()
+    .then(function() {
+      console.log('Playback playing');
+    }, function(err) {
+      //if the user making the request is non-premium, a 403 FORBIDDEN response code will be returned
+      console.log('Something went wrong!', err);
+    });
+
+  })
+
+  
   // normal routes ===============================================================
 
   // show the home page (will also have our login links)
@@ -146,11 +179,15 @@ function setupRoutes(app, passport, SpotifyWebApi) {
   });
 
 
-  app.get('/user', isLoggedIn, function (req, res) {     
+  app.get('/user', isLoggedIn, function (req, res) { 
+    spotifyApiServer.setAccessToken(req.user.security.accessToken);
+    spotifyApiServer.setRefreshToken(req.user.security.refreshToken);
     res.render('user.ejs', { loggedIn: true, user: req.user.name.first });
   })
 
-  app.get('/player', isLoggedIn, function (req, res) {     
+  app.get('/player', isLoggedIn, function (req, res) {  
+    spotifyApiServer.setAccessToken(req.user.security.accessToken);
+    spotifyApiServer.setRefreshToken(req.user.security.refreshToken);   
     res.render('player.ejs', { loggedIn: true, user: req.user.name.first });
   })
   // LOGOUT ==============================

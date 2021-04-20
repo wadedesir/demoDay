@@ -3,7 +3,7 @@
 //   };
 
 window.onSpotifyWebPlaybackSDKReady = () => {
-    const token = 'BQCdole3T_DqH0Sk_eDAuPBYRX809nCCG4hPuUhGyAywsxrlAfay0THnHUT-2SECTdUD7bJqqrZb0zv5l9CY6aSVuSnloGe1L5jRKTaXb1dYWyk6ymhUZ1psYhQgRj4Fosnmj0yYAusUtxKeh0fy1rMnpdLqk9gbdmBpQ6YFw0667ylO0JjSktw';
+    const token = 'BQCFaMqIIfHdtf2iUvvKAiO5FglQaBx1MogBAMLdIyULRpAUJF3jbYnMabFBvHut1ENzArVGOkC_XyzhOJThmWgJwh9Q9tPB5EtEm28EsYSYR04cEu8wikedjUTs_-W3T-CvLSw-lvtt9IZ1NEsSrVempWhW3p113wp8QD7qWYah7nijHPFK57w';
     const player = new Spotify.Player({
       name: 'Web Playback SDK Quick Start Player',
       getOAuthToken: cb => { cb(token); }
