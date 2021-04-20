@@ -73,7 +73,7 @@ function setupRoutes(app, passport, SpotifyWebApi) {
           //query token information to be saved to the server
           user.security.accessToken = data.body['access_token']
           user.security.refreshToken = data.body['refresh_token']
-
+          user.setup = 2 //so new token is not created.
         },
         function(err) {
           console.log('Something went wrong!', err);
@@ -83,7 +83,7 @@ function setupRoutes(app, passport, SpotifyWebApi) {
       const result = await user.save() //actually save the data
     
       .then(result => {
-        res.status(404).send("data:", result)
+        res.send("data: " + result)
       })
       .catch(error => console.error(error))
 
