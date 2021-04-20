@@ -59,7 +59,7 @@ function setupRoutes(app, passport, SpotifyWebApi) {
       res.status(404).send(req.query.error)
     }else if (req.query.code){
       spotifyApiServer.authorizationCodeGrant(req.query.code).then(
-        function(data) {
+        async function(data) {
           console.log('The token expires in ' + data.body['expires_in']);
           console.log('The access token is ' + data.body['access_token']);
           console.log('The refresh token is ' + data.body['refresh_token']);
