@@ -84,10 +84,11 @@ function setupRoutes(app, passport, authorizeURL) {
 
     if (req.query.state){
       if (req.query.error === "access_denied"){
-        res.status(404).send("access_denied")
+        res.status(404).send("access denied")
       }
       else{
         // res.render('user.ejs', { loggedIn: true, user: req.user.name.first });
+        res.status(404).send("access granted")
       }
     }
     
