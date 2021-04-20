@@ -2,7 +2,23 @@ const User = require('./models/user')
 
 module.exports = setupRoutes;
 
-function setupRoutes(app, passport, authorizeURL) {
+function setupRoutes(app, passport, SpotifyWebApi) {
+
+  //generate spotify auth url for user
+  const scopes = ['user-read-private', 'user-read-email', 'user-read-recently-played', 'user-top-read', 'user-modify-playback-state', 'user-follow-read', 'user-library-modify', 'user-library-read', 'streaming'],
+  redirectUri = 'http://moodchime.herokuapp.com/connect',
+  clientId = '1f3c90c77fce4b60bd9e18d35175bd86',
+  state = 'duanote';
+
+  // Setting credentials can be done in the wrapper's constructor, or using the API object's setters.
+  const spotifyApiUser = new SpotifyWebApi({
+      redirectUri: redirectUri,
+      clientId: clientId
+  });
+
+  // Create the authorization URL
+  const authorizeURL = spotifyApiUser.createAuthorizeURL(scopes, state);
+  // https://accounts.spotify.com:443/authorize?client_id=5fe01282e44241328a84e7c5cc169165&response_type=code&redirect_uri=https://example.com/callback&scope=user-read-private%20user-read-email&state=some-state-of-my-choice
 
   // normal routes ===============================================================
 
@@ -10,7 +26,7 @@ function setupRoutes(app, passport, authorizeURL) {
   app.get('/', function (req, res) {
     if (req.user) {
     // logged in
-    console.log(req.user);
+    // console.log(req.user);
     res.render('index.ejs', { loggedIn: true, user: req.user.name.first });
     } else {
     // not logged in
@@ -32,13 +48,34 @@ function setupRoutes(app, passport, authorizeURL) {
   });
 
   app.get('/connect', isLoggedIn, function (req, res) {
-    res.render('connect.ejs', { loggedIn: true, user: req.user.name.first, spotifyUrl: authorizeURL });
+
+    if (req.query.error){
+      res.status(404).send(req.query.error)
+    }else if (req.query.code){
+      spotifyApiUser.authorizationCodeGrant(req.query.code).then(
+        function(data) {
+          console.log('The token expires in ' + data.body['expires_in']);
+          console.log('The access token is ' + data.body['access_token']);
+          console.log('The refresh token is ' + data.body['refresh_token']);
+      
+          // Set the access token on the API object to use it in later calls
+          spotifyApi.setAccessToken(data.body['access_token']);
+          spotifyApi.setRefreshToken(data.body['refresh_token']);
+          res.status(404).send(data)
+        },
+        function(err) {
+          console.log('Something went wrong!', err);
+        }
+      );
+    }else{
+      res.render('connect.ejs', { loggedIn: true, user: req.user.name.first, spotifyUrl: authorizeURL });
+    }
   });
 
   app.get('/onboarding', function (req, res) {
     if (req.user) { // logged in
        
-      if (req.user.setup == 2) { //if completed onboarding
+      if (req.user.setup == 2) { //if completed all onboarding
         res.redirect('/user')
       
       } else if (req.user.setup == 1){ //done onboarding but no spotify
@@ -80,18 +117,8 @@ function setupRoutes(app, passport, authorizeURL) {
   });
 
 
-  app.get('/user', isLoggedIn, function (req, res) {
-
-    if (req.query.state){
-      if (req.query.error === "access_denied"){
-        res.status(404).send("access denied")
-      }
-      else{
-        // res.render('user.ejs', { loggedIn: true, user: req.user.name.first });
-        res.status(404).send("access granted")
-      }
-    }
-    
+  app.get('/user', isLoggedIn, function (req, res) {     
+    res.render('user.ejs', { loggedIn: true, user: req.user.name.first });
   })
   // LOGOUT ==============================
   app.get('/logout', function (req, res) {

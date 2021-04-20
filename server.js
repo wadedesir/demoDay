@@ -26,23 +26,8 @@ let db
 
 // configuration ===============================================================
 
-//generate spotify auth url for user
-const scopes = ['user-read-private', 'user-read-email', 'user-read-recently-played', 'user-top-read', 'user-modify-playback-state', 'user-follow-read', 'user-library-modify', 'user-library-read', 'streaming'],
-redirectUri = 'http://moodchime.herokuapp.com/user',
-clientId = '1f3c90c77fce4b60bd9e18d35175bd86',
-state = 'test';
 
-// Setting credentials can be done in the wrapper's constructor, or using the API object's setters.
-const spotifyApiUser = new SpotifyWebApi({
-    redirectUri: redirectUri,
-    clientId: clientId
-});
-
-// Create the authorization URL
-const authorizeURL = spotifyApiUser.createAuthorizeURL(scopes, state);
-// https://accounts.spotify.com:443/authorize?client_id=5fe01282e44241328a84e7c5cc169165&response_type=code&redirect_uri=https://example.com/callback&scope=user-read-private%20user-read-email&state=some-state-of-my-choice
-
-
+// http://moodchime.herokuapp.com/user?code=AQBJdxCfzk7rAHrgZto4-TSPnSticdq6dxZLMG8kmh-m3RsvHLkOxzkSIRO4gtCN5q1dMjpjAz7YsCkM_SI4aoChBZ_A9d0vZCQpP0lzacUe_ivwhyY_kcn6i-TD8aN_hQQqaSmrMQX7OWdMk7fyRH1ROcvd3ohBj6seBp5S8auQ4PTo9x69QswlkA8xX0a-nsbb_RaDTV_oERMZvaHzEmczZMMg_esgyyh5ooAEFFSH8jW0lxOVUNSQHqLWBNVhhQBCbCbGcsWVT14rxXd3lYVvKdrUa1n6bbGrqb6Oo_EyGhAKwN03OiqbgoyEueEcNY9yW8ERHWUXlD12ZY5WUVO4ItScHnAO2Yw6UBIWfGZgUXuPhomnCc-WQo59nY_f-5X8kRLi_caMwR2f_do-ZV2m1hlkjA&state=test
 
 app.use(bodyParser.urlencoded({ extended: true }))
 
@@ -51,14 +36,10 @@ mongoose.connect(configDB.url, { useNewUrlParser: true, useUnifiedTopology: true
   db = database
   // require('./app/routes.js')(app, passport, db)
   // setupRoutes(app, passport, db);
-  setupRoutes(app, passport, authorizeURL)
+  setupRoutes(app, passport, SpotifyWebApi)
 }); // connect to our database
 
-const spotifyApiServer = new SpotifyWebApi({
-  clientId: '1f3c90c77fce4b60bd9e18d35175bd86',
-  clientSecret: '8758a46abe0a4ff2abb77245a9b64c2d',
-  redirectUri: 'http://moodchime.herokuapp.com/user'
-});
+// s
 
 require('./config/passport')(passport); // pass passport for configuration
 
