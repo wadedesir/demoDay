@@ -59,30 +59,18 @@ function setupRoutes(app, passport, SpotifyWebApi) {
       res.status(404).send(req.query.error)
     }else if (req.query.code){
 
-      // const response = await fetch('some-url', {});
-      // const json = await response.json();
-      // return json.first_name.concat(' ').concat(json.last_name);
-
       const data = await spotifyApiServer.authorizationCodeGrant(req.query.code)
       .catch(err => {
         console.log('Something went wrong!', err);
       })
 
-      console.log('The token expires in ' + data.body['expires_in']);
-      console.log('The access token is ' + data.body['access_token']);
-      console.log('The refresh token is ' + data.body['refresh_token']);
+      // console.log('The token expires in ' + data.body['expires_in']);
+      // console.log('The access token is ' + data.body['access_token']);
+      // console.log('The refresh token is ' + data.body['refresh_token']);
   
       // Set the access token on the API object to use it in later calls
       spotifyApiServer.setAccessToken(data.body['access_token']);
       spotifyApiServer.setRefreshToken(data.body['refresh_token']);
-
-      // spotifyApiServer.authorizationCodeGrant(req.query.code).then(
-      //   function(data) {
-      //   },
-      //   function(err) {
-      //     console.log('Something went wrong!', err);
-      //   }
-      // );
 
       const user = await User.findById(req.user._id) //grab current user
       //query token information to be saved to the server
@@ -160,6 +148,10 @@ function setupRoutes(app, passport, SpotifyWebApi) {
 
   app.get('/user', isLoggedIn, function (req, res) {     
     res.render('user.ejs', { loggedIn: true, user: req.user.name.first });
+  })
+
+  app.get('/player', isLoggedIn, function (req, res) {     
+    res.render('player.ejs', { loggedIn: true, user: req.user.name.first });
   })
   // LOGOUT ==============================
   app.get('/logout', function (req, res) {
