@@ -19,7 +19,11 @@ const userSchema = mongoose.Schema({
     usage: String,
     triggers: []
   },
-  setup: Number
+  setup: Number,
+  security: {
+    refreshToken: String,
+    accessToken: String
+  }
 
 });
 

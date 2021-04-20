@@ -7,7 +7,7 @@ function setupRoutes(app, passport, SpotifyWebApi) {
   const spotifyApiServer = new SpotifyWebApi({
   clientId: '1f3c90c77fce4b60bd9e18d35175bd86',
   clientSecret: '8758a46abe0a4ff2abb77245a9b64c2d',
-  redirectUri: 'http://moodchime.herokuapp.com/user'
+  redirectUri: 'http://moodchime.herokuapp.com/connect'
   });
 
   //generate spotify auth url for user
@@ -53,20 +53,26 @@ function setupRoutes(app, passport, SpotifyWebApi) {
 
   });
 
-  app.get('/connect', isLoggedIn, function (req, res) {
+  app.get('/connect', isLoggedIn, async function (req, res) {
 
     if (req.query.error){
       res.status(404).send(req.query.error)
     }else if (req.query.code){
-      spotifyApiUser.authorizationCodeGrant(req.query.code).then(
+      spotifyApiServer.authorizationCodeGrant(req.query.code).then(
         function(data) {
           console.log('The token expires in ' + data.body['expires_in']);
           console.log('The access token is ' + data.body['access_token']);
           console.log('The refresh token is ' + data.body['refresh_token']);
       
           // Set the access token on the API object to use it in later calls
-          spotifyApi.setAccessToken(data.body['access_token']);
-          spotifyApi.setRefreshToken(data.body['refresh_token']);
+          spotifyServer.setAccessToken(data.body['access_token']);
+          spotifyServer.setRefreshToken(data.body['refresh_token']);
+
+          //save token information to the server
+          const user = await User.findById(req.user._id)
+          user.security.accessToken = data.body['access_token']
+          user.security.refreshToken = data.body['refresh_token']
+
           res.status(404).send(data)
         },
         function(err) {
@@ -82,6 +88,18 @@ function setupRoutes(app, passport, SpotifyWebApi) {
     if (req.user) { // logged in
        
       if (req.user.setup == 2) { //if completed all onboarding
+        spotifyApiServer.refreshAccessToken().then(
+          function(data) {
+            console.log('The access token has been refreshed!');
+        
+            // Save the access token so that it's used in future calls
+            spotifyApiServer.setAccessToken(data.body['access_token']);
+          },
+          function(err) {
+            console.log('Could not refresh access token', err);
+          }
+        );
+
         res.redirect('/user')
       
       } else if (req.user.setup == 1){ //done onboarding but no spotify
@@ -104,7 +122,7 @@ function setupRoutes(app, passport, SpotifyWebApi) {
     const moodData = {listen: request.userMusic, usage: request.usage, triggers : request.userChoice}
     const name = {first: request.firstName, last: request.lastName}
     const age = request.age
-    console.log(moodData, name, age);
+    // console.log(moodData, name, age);
 
     const user = await User.findById(req.user._id)
     user.moodData = moodData
