@@ -2,7 +2,7 @@ const User = require('./models/user')
 
 module.exports = setupRoutes;
 
-function setupRoutes(app, passport) {
+function setupRoutes(app, passport, authorizeURL) {
 
   // normal routes ===============================================================
 
@@ -32,7 +32,7 @@ function setupRoutes(app, passport) {
   });
 
   app.get('/connect', isLoggedIn, function (req, res) {
-    res.render('connect.ejs', { loggedIn: true, user: req.user.name.first });
+    res.render('connect.ejs', { loggedIn: true, user: req.user.name.first, spotifyUrl: authorizeURL });
   });
 
   app.get('/onboarding', function (req, res) {
@@ -71,7 +71,7 @@ function setupRoutes(app, passport) {
     // res.json({ user: result })
 
     .then(result => {
-      res.redirect('/user')
+      res.redirect('/connect')
     })
     .catch(error => console.error(error))
   });
@@ -117,6 +117,11 @@ function setupRoutes(app, passport) {
     failureFlash: true // allow flash messages
   }));
 
+  //for errors
+app.use(function (req, res, next) {
+  res.status(404).send("Sorry can't find that!")
+})
+
 };
 
 // route middleware to ensure user is logged in
@@ -127,3 +132,4 @@ function isLoggedIn(req, res, next) {
 
   res.redirect('/login');
 }
+
