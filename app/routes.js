@@ -36,12 +36,15 @@ function setupRoutes(app, passport, authorizeURL) {
   });
 
   app.get('/onboarding', function (req, res) {
-    if (req.user) {
-      if (req.user.setup == 1) {
-      // logged in
-      res.redirect('/user')
-      // res.render('index.ejs', { loggedIn: true, user: req.user.name.first});
-      } else {
+    if (req.user) { // logged in
+       
+      if (req.user.setup == 2) { //if completed onboarding
+        res.redirect('/user')
+      
+      } else if (req.user.setup == 1){ //done onboarding but no spotify
+        res.redirect('/connect')
+      }
+      else {
       // not logged in
       res.render('onboarding.ejs', {loggedIn: true, user: ''});
       }
@@ -77,8 +80,17 @@ function setupRoutes(app, passport, authorizeURL) {
   });
 
 
-  app.get('/user', isLoggedIn, async function (req, res) {
-    res.render('user.ejs', { loggedIn: true, user: req.user.name.first });
+  app.get('/user', isLoggedIn, function (req, res) {
+
+    if (req.query.state){
+      if (req.query.error === "access_denied"){
+        res.status(404).send("access_denied")
+      }
+      else{
+        // res.render('user.ejs', { loggedIn: true, user: req.user.name.first });
+      }
+    }
+    
   })
   // LOGOUT ==============================
   app.get('/logout', function (req, res) {
