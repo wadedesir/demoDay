@@ -28,17 +28,10 @@ function setupRoutes(app, passport, SpotifyWebApi) {
 
   app.get('/pause', isLoggedIn, function (req, res) {   
 
-    spotifyApiServer.getMyDevices()
-  .then(function(data) {
-    let availableDevices = data.body.devices;
-    console.log(availableDevices);
-  }, function(err) {
-    console.log('Something went wrong!', err);
-  });
-
     spotifyApiServer.pause()
     .then(function() {
       console.log('Playback paused');
+
     }, function(err) {
       //if the user making the request is non-premium, a 403 FORBIDDEN response code will be returned
       console.log('Something went wrong!', err);
@@ -185,9 +178,27 @@ function setupRoutes(app, passport, SpotifyWebApi) {
     res.render('user.ejs', { loggedIn: true, user: req.user.name.first });
   })
 
-  app.get('/player', isLoggedIn, function (req, res) {  
+  app.get('/player', isLoggedIn, async function (req, res) {  
     spotifyApiServer.setAccessToken(req.user.security.accessToken);
-    spotifyApiServer.setRefreshToken(req.user.security.refreshToken);   
+    spotifyApiServer.setRefreshToken(req.user.security.refreshToken); 
+
+    availableDevices = await spotifyApiServer.getMyDevices()
+    duanotePlayer = availableDevices.body.devices.filter( device => device.name == "duanote Player")
+    // .then(function(data) {
+    //   let availableDevices = data.body.devices;
+    //   console.log(availableDevices);
+    // }, function(err) {
+    //   console.log('Something went wrong!', err);
+    // });
+
+    spotifyApi.transferMyPlayback(duanotePlayer.id)
+    .then(function() {
+      console.log('Transfering playback to duanote Player:' + duanotePlayer.id);
+    }, function(err) {
+      //if the user making the request is non-premium, a 403 FORBIDDEN response code will be returned
+      console.log('Something went wrong!', err);
+    });  
+
     res.render('player.ejs', { loggedIn: true, user: req.user.name.first });
   })
   // LOGOUT ==============================

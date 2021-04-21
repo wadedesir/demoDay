@@ -5,7 +5,7 @@
 window.onSpotifyWebPlaybackSDKReady = () => {
     const token = 'BQDK8Zx4eOFOs5yx_FV54B8sAiGig5Y0JRwXo_mVVslAgww0nGAYGbhNHqq7LAMp5eiKAGANV-zYMky57DZFCiC5Pk-aXwtq5KKdKK-Tl1M2IW6Aiaek5hjU6BNzimKD9yWj4gguVyt5Q_31JK-v4GLN3CWHrE87Qpd_cyYImxf2EBnUNHZ3R_g';
     const player = new Spotify.Player({
-      name: 'Web Playback SDK Quick Start Player',
+      name: 'duanote Player',
       getOAuthToken: cb => { cb(token); }
     });
   
