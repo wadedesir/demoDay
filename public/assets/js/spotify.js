@@ -29,7 +29,7 @@ window.onSpotifyWebPlaybackSDKReady = () => {
     // Ready
     player.addListener('ready', ({ device_id }) => {
       console.log('Ready with Device ID', device_id);
-      var deviceId = device_id
+      deviceId = device_id
       fetch('/initializePlayer');
         
     });
@@ -44,13 +44,14 @@ window.onSpotifyWebPlaybackSDKReady = () => {
   };
 
 document.querySelector('.guided').addEventListener('click', playMedia)
+document.querySelector('.freePlay').addEventListener('click', pauseMedia)
 
-function playMedia(){
-    fetch(`/https://api.spotify.com/v1/me/player/play?device_id=${deviceId}`, {
-        method: 'put',
-        headers: { 'Content-Type': 'application/json' , 'Authorization' : token},
-        body: JSON.stringify({
-          name: 'Darth Vadar',
-        })
-      })
+async function playMedia(){
+  const play = await fetch('/play');
+  console.log(play)
+}
+
+async function pauseMedia(){
+  const play = await fetch('/pause');
+  console.log(play)
 }

@@ -4,6 +4,8 @@ module.exports = setupRoutes;
 
 function setupRoutes(app, passport, SpotifyWebApi) {
 
+  let duanotePlayer
+  let duanotePlayerId
   const spotifyApiServer = new SpotifyWebApi({
   clientId: '1f3c90c77fce4b60bd9e18d35175bd86',
   clientSecret: '8758a46abe0a4ff2abb77245a9b64c2d',
@@ -26,30 +28,20 @@ function setupRoutes(app, passport, SpotifyWebApi) {
   const authorizeURL = spotifyApiUser.createAuthorizeURL(scopes, state);
   // https://accounts.spotify.com:443/authorize?client_id=5fe01282e44241328a84e7c5cc169165&response_type=code&redirect_uri=https://example.com/callback&scope=user-read-private%20user-read-email&state=some-state-of-my-choice
 
-  app.get('/pause', isLoggedIn, function (req, res) {   
-
-    spotifyApiServer.pause()
-    .then(function() {
-      console.log('Playback paused');
-
-    }, function(err) {
-      //if the user making the request is non-premium, a 403 FORBIDDEN response code will be returned
+  app.get('/pause', isLoggedIn, async function (req, res) {   
+    const result = await spotifyApiServer.pause()
+    .catch(err => {
       console.log('Something went wrong!', err);
-    });
-
+    })
+    res.json("success")
   })
 
-  app.get('/play', isLoggedIn, function (req, res) {   
-
-    spotifyApiServer.play()
-    .then(function() {
-      console.log('Playback playing');
-      res.redirect('/')
-    }, function(err) {
-      //if the user making the request is non-premium, a 403 FORBIDDEN response code will be returned
+  app.get('/play', isLoggedIn, async function (req, res) {   
+    const result = await spotifyApiServer.play({context_uri: "spotify:album:5ht7ItJgpBH7W6vJ5BqpPr"})
+    .catch(err => {
       console.log('Something went wrong!', err);
-    });
-
+    })
+    res.json("success")
   })
 
   
