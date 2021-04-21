@@ -11,7 +11,7 @@ function setupRoutes(app, passport, SpotifyWebApi) {
   });
 
   //generate spotify auth url for user
-  const scopes = ['user-read-private', 'user-read-email', 'user-read-recently-played', 'user-top-read', 'user-modify-playback-state', 'user-follow-read', 'user-library-modify', 'user-library-read', 'streaming', 'user-read-playback-state'],
+  const scopes = ['user-read-private', 'user-read-email', 'user-read-recently-played', 'user-top-read', 'user-modify-playback-state', 'user-follow-read', 'user-library-modify', 'user-library-read', 'streaming', 'user-read-playback-state', 'user-read-currently-playing', 'app-remote-control'],
   redirectUri = 'http://moodchime.herokuapp.com/connect',
   clientId = '1f3c90c77fce4b60bd9e18d35175bd86',
   state = 'duanote';
