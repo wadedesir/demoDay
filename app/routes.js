@@ -182,22 +182,24 @@ function setupRoutes(app, passport, SpotifyWebApi) {
     spotifyApiServer.setAccessToken(req.user.security.accessToken);
     spotifyApiServer.setRefreshToken(req.user.security.refreshToken); 
 
-    availableDevices = await spotifyApiServer.getMyDevices()
-    duanotePlayer = availableDevices.body.devices.filter( device => device.name == "duanote Player")
-    // .then(function(data) {
-    //   let availableDevices = data.body.devices;
-    //   console.log(availableDevices);
-    // }, function(err) {
-    //   console.log('Something went wrong!', err);
-    // });
-
-    spotifyApi.transferMyPlayback(duanotePlayer.id)
-    .then(function() {
-      console.log('Transfering playback to duanote Player:' + duanotePlayer.id);
+    // availableDevices = await spotifyApiServer.getMyDevices()
+    // console.log(availableDevices.body.devices)
+    // duanotePlayer = availableDevices.body.devices.filter( device => device.name == "duanote Player")
+    spotifyApiServer.getMyDevices()
+    .then(function(data) {
+      let availableDevices = data.body.devices;
+      console.log(availableDevices);
     }, function(err) {
-      //if the user making the request is non-premium, a 403 FORBIDDEN response code will be returned
       console.log('Something went wrong!', err);
-    });  
+    });
+
+    // spotifyApi.transferMyPlayback(duanotePlayer.id)
+    // .then(function() {
+    //   console.log('Transfering playback to duanote Player:' + duanotePlayer.id);
+    // }, function(err) {
+    //   //if the user making the request is non-premium, a 403 FORBIDDEN response code will be returned
+    //   console.log('Something went wrong!', err);
+    // });  
 
     res.render('player.ejs', { loggedIn: true, user: req.user.name.first });
   })
