@@ -44,6 +44,7 @@ function setupRoutes(app, passport, SpotifyWebApi) {
     spotifyApiServer.play()
     .then(function() {
       console.log('Playback playing');
+      res.redirect('/')
     }, function(err) {
       //if the user making the request is non-premium, a 403 FORBIDDEN response code will be returned
       console.log('Something went wrong!', err);
@@ -115,24 +116,27 @@ function setupRoutes(app, passport, SpotifyWebApi) {
     }
   });
 
-  app.get('/onboarding', function (req, res) {
+  app.get('/token', isLoggedIn, function(req, res) {
+    // convert whatever we want to send (preferably should be an object) to JSON
+    const JSONdata = JSON.stringify(req.user.security.accessToken);
+    res.send(JSONdata);
+  })
+
+  app.get('/onboarding', async function (req, res) {
     if (req.user) { // logged in
        
       if (req.user.setup == 2) { //if completed all onboarding
-        spotifyApiServer.refreshAccessToken().then(
-          function(data) {
-            console.log('The access token has been refreshed!');
-        
-            // Save the access token so that it's used in future calls
-            spotifyApiServer.setAccessToken(data.body['access_token']);
-          },
-          function(err) {
-            console.log('Could not refresh access token', err);
-          }
-        );
+        spotifyApiServer.setAccessToken(req.user.security.accessToken); //old access token
+        spotifyApiServer.setRefreshToken(req.user.security.refreshToken); 
+        const data = await spotifyApiServer.refreshAccessToken() //refresh access token with refresh token
+        spotifyApiServer.setAccessToken(data.body['access_token']); //set new access token
 
+        const user = await User.findById(req.user._id)
+        user.security.accessToken = data.body['access_token'] //update server side access token
+        const result = await user.save()
+        
         res.redirect('/user')
-      
+        
       } else if (req.user.setup == 1){ //done onboarding but no spotify
         res.redirect('/connect')
       }
@@ -173,25 +177,14 @@ function setupRoutes(app, passport, SpotifyWebApi) {
 
 
   app.get('/user', isLoggedIn, function (req, res) { 
-    spotifyApiServer.setAccessToken(req.user.security.accessToken);
-    spotifyApiServer.setRefreshToken(req.user.security.refreshToken);
+    console.log("access", req.user.security.accessToken)
     res.render('user.ejs', { loggedIn: true, user: req.user.name.first });
   })
 
   app.get('/player', isLoggedIn, async function (req, res) {  
-    spotifyApiServer.setAccessToken(req.user.security.accessToken);
-    spotifyApiServer.setRefreshToken(req.user.security.refreshToken); 
 
-    // availableDevices = await spotifyApiServer.getMyDevices()
+    // availableDevices = await spotifyApiServer.getMyDevices().jso
     // console.log(availableDevices.body.devices)
-    // duanotePlayer = availableDevices.body.devices.filter( device => device.name == "duanote Player")
-    spotifyApiServer.getMyDevices()
-    .then(function(data) {
-      let availableDevices = data.body.devices;
-      console.log(availableDevices);
-    }, function(err) {
-      console.log('Something went wrong!', err);
-    });
 
     // spotifyApi.transferMyPlayback(duanotePlayer.id)
     // .then(function() {
@@ -203,6 +196,25 @@ function setupRoutes(app, passport, SpotifyWebApi) {
 
     res.render('player.ejs', { loggedIn: true, user: req.user.name.first });
   })
+
+  app.get('/initializePlayer', isLoggedIn, async function (req, res) {
+    const availableDevices = await spotifyApiServer.getMyDevices()
+    .catch(error => console.error(error))
+
+    console.log(availableDevices.body.devices);
+    duanotePlayer = availableDevices.body.devices.filter( device => device.name == "Duanote Player")
+    duanotePlayerId = [duanotePlayer[0].id]
+    // spotifyApi.transferMyPlayback(duanotePlayer.id)
+    // .catch(error => console.error(error))
+    spotifyApiServer.transferMyPlayback(duanotePlayerId)
+    .then(function() {
+      console.log('Transfering playback to duanote Player: ' + duanotePlayerId);
+    }, function(err) {
+      //if the user making the request is non-premium, a 403 FORBIDDEN response code will be returned
+      console.log('Something went wrong while transferring playback!', err);
+    }); 
+  })
+
   // LOGOUT ==============================
   app.get('/logout', function (req, res) {
     req.logout();

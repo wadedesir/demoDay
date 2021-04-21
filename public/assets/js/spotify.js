@@ -1,11 +1,19 @@
 // window.onSpotifyWebPlaybackSDKReady = () => {
 //     // You can now initialize Spotify.Player and use the SDK
 //   };
+async function getToken(){
+    const fetchToken = await fetch('/token');
+    console.log(fetchToken)
+    const token = await fetchToken.json();
+    return token
+}
+const deviceId
+const token = getToken()
 
 window.onSpotifyWebPlaybackSDKReady = () => {
-    const token = 'BQDK8Zx4eOFOs5yx_FV54B8sAiGig5Y0JRwXo_mVVslAgww0nGAYGbhNHqq7LAMp5eiKAGANV-zYMky57DZFCiC5Pk-aXwtq5KKdKK-Tl1M2IW6Aiaek5hjU6BNzimKD9yWj4gguVyt5Q_31JK-v4GLN3CWHrE87Qpd_cyYImxf2EBnUNHZ3R_g';
+    
     const player = new Spotify.Player({
-      name: 'duanote Player',
+      name: 'Duanote Player',
       getOAuthToken: cb => { cb(token); }
     });
   
@@ -21,6 +29,9 @@ window.onSpotifyWebPlaybackSDKReady = () => {
     // Ready
     player.addListener('ready', ({ device_id }) => {
       console.log('Ready with Device ID', device_id);
+      var deviceId = device_id
+      fetch('/initializePlayer');
+        
     });
   
     // Not Ready
@@ -31,3 +42,15 @@ window.onSpotifyWebPlaybackSDKReady = () => {
     // Connect to the player!
     player.connect();
   };
+
+document.querySelector('.guided').addEventListener('click', playMedia)
+
+function playMedia(){
+    fetch(`/https://api.spotify.com/v1/me/player/play?device_id=${deviceId}`, {
+        method: 'put',
+        headers: { 'Content-Type': 'application/json' , 'Authorization' : token},
+        body: JSON.stringify({
+          name: 'Darth Vadar',
+        })
+      })
+}
