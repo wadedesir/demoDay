@@ -5,10 +5,10 @@ const express  = require('express');
 const bodyParser = require('body-parser')
 const app      = express();
 
-let port = process.env.PORT;
-if (port == null || port == "") {
-  port = 8080;
-}
+let port = process.env.PORT || 8080;
+// if (port == null || port == "") {
+//   port = 8080;
+// }
 
 const mongoose = require('mongoose');
 const passport = require('passport');
