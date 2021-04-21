@@ -7,7 +7,7 @@ async function getToken(){
     const token = await fetchToken.json();
     return token
 }
-const deviceId
+// const deviceId
 const token = getToken()
 
 window.onSpotifyWebPlaybackSDKReady = () => {
