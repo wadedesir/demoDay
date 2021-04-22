@@ -1,16 +1,16 @@
 const User = require('./models/user')
-const duanote = require('./duanote')
+const duatone = require('./duatone')
 
 module.exports = setupRoutes;
 
 function setupRoutes(app, passport, SpotifyWebApi) {
 
-  //duanote specific setup
-  let duanotePlayer, duanoteUser, authorizeURL
+  //duatone specific setup
+  let duatonePlayer, duatoneUser, authorizeURL
 
-  [duanotePlayer, duanoteUser, authorizeURL] = duanote.setup(SpotifyWebApi) //set duanote values returned frm duanote.js
+  [duatonePlayer, duatoneUser, authorizeURL] = duatone.setup(SpotifyWebApi) //set duatone values returned frm duatone.js
 
-  duanote.start(app, duanotePlayer)
+  duatone.start(app, duatonePlayer)
 
   // normal routes ===============================================================
 
@@ -45,20 +45,20 @@ function setupRoutes(app, passport, SpotifyWebApi) {
       res.status(404).send(req.query.error)
     }else if (req.query.code){ //no err, code is returned
 
-      const data = await duanotePlayer.authorizationCodeGrant(req.query.code) //run auth with given code
+      const data = await duatonePlayer.authorizationCodeGrant(req.query.code) //run auth with given code
       .catch(err => {
         console.log('Something went wrong!', err);
       })
   
       // Set the access token on the API object to use it in later calls
-      duanotePlayer.setAccessToken(data.body['access_token']);
-      duanotePlayer.setRefreshToken(data.body['refresh_token']);
+      duatonePlayer.setAccessToken(data.body['access_token']);
+      duatonePlayer.setRefreshToken(data.body['refresh_token']);
 
       const user = await User.findById(req.user._id) //grab current user
 
       //query token information to be saved to the server
-      user.security.accessToken = duanotePlayer.getAccessToken()
-      user.security.refreshToken = duanotePlayer.getRefreshToken()
+      user.security.accessToken = duatonePlayer.getAccessToken()
+      user.security.refreshToken = duatonePlayer.getRefreshToken()
       user.setup = 2 //so new token is not created.
       const result = await user.save() //actually save the data
     
@@ -81,10 +81,10 @@ function setupRoutes(app, passport, SpotifyWebApi) {
     if (req.user) { // logged in
        
       if (req.user.setup == 2 || req.user.setup == 3) { //if completed all onboarding
-        duanotePlayer.setAccessToken(req.user.security.accessToken); //old access token
-        duanotePlayer.setRefreshToken(req.user.security.refreshToken); 
-        const data = await duanotePlayer.refreshAccessToken() //refresh access token with refresh token
-        duanotePlayer.setAccessToken(data.body['access_token']); //set new access token
+        duatonePlayer.setAccessToken(req.user.security.accessToken); //old access token
+        duatonePlayer.setRefreshToken(req.user.security.refreshToken); 
+        const data = await duatonePlayer.refreshAccessToken() //refresh access token with refresh token
+        duatonePlayer.setAccessToken(data.body['access_token']); //set new access token
 
         const user = await User.findById(req.user._id)
         user.security.accessToken = data.body['access_token'] //update server side access token

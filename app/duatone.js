@@ -1,10 +1,10 @@
 module.exports = {
-    setup : duanoteSetup,
-    start: duanote
+    setup : duatoneSetup,
+    start: duatone
 };
 
-function duanoteSetup(SpotifyWebApi){ //generate duanotePlayer and User objects
-    const duanotePlayer = new SpotifyWebApi({
+function duatoneSetup(SpotifyWebApi){ //generate duatonePlayer and User objects
+    const duatonePlayer = new SpotifyWebApi({
         clientId: '1f3c90c77fce4b60bd9e18d35175bd86',
         clientSecret: '8758a46abe0a4ff2abb77245a9b64c2d',
         redirectUri: 'http://moodchime.herokuapp.com/connect'
@@ -14,37 +14,37 @@ function duanoteSetup(SpotifyWebApi){ //generate duanotePlayer and User objects
         const scopes = ['user-read-private', 'user-read-email', 'user-read-recently-played', 'user-top-read', 'user-modify-playback-state', 'user-follow-read', 'user-library-modify', 'user-library-read', 'streaming', 'user-read-playback-state', 'user-read-currently-playing', 'app-remote-control'],
         redirectUri = 'http://moodchime.herokuapp.com/connect',
         clientId = '1f3c90c77fce4b60bd9e18d35175bd86',
-        state = 'duanote';
+        state = 'duatone';
       
         // Setting credentials can be done in the wrapper's constructor, or using the API object's setters.
-        const duanoteUser = new SpotifyWebApi({
+        const duatoneUser = new SpotifyWebApi({
             redirectUri: redirectUri,
             clientId: clientId
         });
 
         // Create the authorization URL
-        const authorizeURL = duanoteUser.createAuthorizeURL(scopes, state);
+        const authorizeURL = duatoneUser.createAuthorizeURL(scopes, state);
         // https://accounts.spotify.com:443/authorize?client_id=5fe01282e44241328a84e7c5cc169165&response_type=code&redirect_uri=https://example.com/callback&scope=user-read-private%20user-read-email&state=some-state-of-my-choice
 
-        return [duanotePlayer, duanoteUser, authorizeURL]
+        return [duatonePlayer, duatoneUser, authorizeURL]
 }
 
 
-function duanote(app, duanotePlayer){
-    let duanotePlayerDevice
-    let duanotePlayerDeviceId
+function duatone(app, duatonePlayer){
+    let duatonePlayerDevice
+    let duatonePlayerDeviceId
     
     app.get('/initializePlayer', isLoggedIn, async function (req, res) {
-    const availableDevices = await duanotePlayer.getMyDevices()
+    const availableDevices = await duatonePlayer.getMyDevices()
     .catch(error => console.error(error))
   
     console.log(availableDevices.body.devices);
-    duanotePlayerDevice = availableDevices.body.devices.filter( device => device.name == "Duanote Player")
-    duanotePlayerDeviceId = [duanotePlayerDevice[0].id]
+    duatonePlayerDevice = availableDevices.body.devices.filter( device => device.name == "duatone Player")
+    duatonePlayerDeviceId = [duatonePlayerDevice[0].id]
 
-    duanotePlayer.transferMyPlayback(duanotePlayerDeviceId)
+    duatonePlayer.transferMyPlayback(duatonePlayerDeviceId)
     .then(function() {
-        console.log('Transfering playback to duanote Player: ' + duanotePlayerDeviceId);
+        console.log('Transfering playback to duatone Player: ' + duatonePlayerDeviceId);
     }, function(err) {
         //if the user making the request is non-premium, a 403 FORBIDDEN response code will be returned
         console.log('Something went wrong while transferring playback!', err);
@@ -65,7 +65,7 @@ function duanote(app, duanotePlayer){
     })
   
     app.get('/pause', isLoggedIn, async function (req, res) {   
-    const result = await duanotePlayer.pause()
+    const result = await duatonePlayer.pause()
     .catch(err => {
         console.log('Something went wrong!', err);
     })
@@ -73,7 +73,7 @@ function duanote(app, duanotePlayer){
     })
   
     app.get('/play', isLoggedIn, async function (req, res) {   
-    const result = await duanotePlayer.play({context_uri: "spotify:album:5ht7ItJgpBH7W6vJ5BqpPr"})
+    const result = await duatonePlayer.play({context_uri: "spotify:album:5ht7ItJgpBH7W6vJ5BqpPr"})
     .catch(err => {
         console.log('Something went wrong!', err);
     })
@@ -83,7 +83,7 @@ function duanote(app, duanotePlayer){
     app.get('/search', isLoggedIn, async function (req, res) {
     
         // Get available genre seeds
-        // duanotePlayer.getAvailableGenreSeeds()
+        // duatonePlayer.getAvailableGenreSeeds()
         // .then(function(data) {
         //     let genreSeeds = data.body;
         //     console.log(genreSeeds);
@@ -92,7 +92,7 @@ function duanote(app, duanotePlayer){
         // });
         if(req.query.artist){
             console.log(req.query)
-            duanotePlayer.searchArtists(req.query.artist)
+            duatonePlayer.searchArtists(req.query.artist)
                 .then(function(data) {
                     console.log('Search artists by ' + req.query.artist, data.body);
                     console.log("query items: ", data.body.artists.items)
@@ -102,7 +102,7 @@ function duanote(app, duanotePlayer){
         }
         else if (req.query.track){
 
-            duanotePlayer.searchTracks(`track:${req.query.tracks}`, {limit: 1})
+            duatonePlayer.searchTracks(`track:${req.query.tracks}`, {limit: 1})
             .then(function(data) {
             console.log(`Search tracks by ${req.query.tracks}`, data.body, data.body.tracks.items);
             }, function(err) {
@@ -115,7 +115,7 @@ function duanote(app, duanotePlayer){
     })
 
     app.get('/songQueue', isLoggedIn, async function (req, res) {
-        duanotePlayer.getRecommendations({
+        duatonePlayer.getRecommendations({
             limit: 1,
             target_energy: 0.2,
             seed_artists: ['5Pwc4xIPtQLFEnJriah9YJ', '53XhwfbYqKCa1cC15pYq2q'],
