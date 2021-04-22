@@ -37,34 +37,13 @@
 
 <body class="onboardingPage">
 
-  <!-- ======= Header ======= -->
-  <%- include('partials/header') %>
-  <!-- End Header -->
-
-  <main id="main">
-
-    <!-- ======= Breadcrumbs Section ======= -->
-    <section class="breadcrumbs">
-      <div class="container">
-
-        <div class="d-flex justify-content-between align-items-center">
-          <h2>Onboarding</h2>
-          <ol>
-            <li><a href="index.html">Home</a></li>
-            <li>connect</li>
-          </ol>
-        </div>
-
-      </div>
-    </section><!-- End Breadcrumbs Section -->
-
-    <section class="inner-page">
-
-      <div class="container d-flex justify-content-center">
-        <!-- https://codepen.io/jeetgohil/pen/gdwVeV  template for form-->
-        <div class="col-lg-5 mt-5 mt-lg-0" data-aos="fade-left" data-aos-delay="200">
-          <h1>Connect to spotify</h1>
-          <a href="<%= spotifyUrl %>"><button class="get-started-btn cred-btn" >Connect</button></a>
+  <section class="inner-page">
+    <h1 class="loginLogo text-center"><a href="index.html">duatone</a></h1>
+    <div class="container d-flex justify-content-center">
+      <!-- https://codepen.io/jeetgohil/pen/gdwVeV  template for form-->
+      <div class="col-lg-5 mt-5 mt-lg-0" data-aos="fade-left" data-aos-delay="200">
+        <p class="text-center onboardMessage">Let's connect to spotify! We require a spotify account to create a personalized sound profile from your previous listening habits.</p>
+          <a href="<%= spotifyUrl %>"><button class="spotifyConnect" ><img src="assets/img/spotifyIcon.png" alt=""></button></a>
           
         
         </div>                                                                                                                                                                                                                                                                                                                                                                                                                                                  
@@ -75,7 +54,7 @@
   </main><!-- End #main -->
 
   <!-- ======= Footer ======= -->
-<%- include('partials/footer') %>
+<!-- %- include('partials/footer') % -->
 <!-- End Footer -->
 
   <div id="preloader"></div>

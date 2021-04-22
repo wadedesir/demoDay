@@ -44,59 +44,68 @@
       <div class="container d-flex justify-content-center">
         <!-- https://codepen.io/jeetgohil/pen/gdwVeV  template for form-->
         <div class="col-lg-5 mt-5 mt-lg-0" data-aos="fade-left" data-aos-delay="200">
-          <h2>Welcome to duatone!</h1>
+          <p class="text-center onboardMessage">Welcome to duatone! Before we get started we need some additional information for personalization</p>
           <form id="survey-form" action="/onboarding" method="post">
-            <div class="form-row">
-              <div class="col">
-                <label id="name-label">First Name</label>
-                <input id="name" name="firstName" type="name" class="form-control" placeholder="First name" required>
+            
+            <div class="setOne">
+              <div class="form-row">
+                <div class="col">
+                  <label id="name-label">First Name</label>
+                  <input id="name" name="firstName" type="name" class="form-control" placeholder="First name" required>
+                </div>
+                <div class="col">
+                  <label for="formGroupExampleInput">Last Name</label>
+                  <input id="last-name" name="lastName" type="name" class="form-control" placeholder="Last name" required>
+                </div>
               </div>
-              <div class="col">
-                <label for="formGroupExampleInput">Last Name</label>
-                <input id="last-name" name="lastName" type="name" class="form-control" placeholder="Last name" required>
+              <!-- <br/> -->
+              <div class="form-group">
+                <label id="number-label">Your age</label>
+                <input id="number" name="age" type="number" min="10" max="125" class="form-control" id="number" placeholder="Age" required>
+              </div>
+              <div class="form-group">
+                <label for="exampleFormControlSelect2">My favorite music genre is:</label>
+                <select class="form-control" id="dropdown" name="userMusic">
+                  <option>Pop</option>
+                  <option>Dance</option>
+                  <option>Country</option>
+                  <option>Rap</option>
+                  <option>Rhythm and Blues</option>
+                  <option>Jazz</option>
+                </select>
               </div>
             </div>
-            <!-- <br/> -->
-            <div class="form-group">
-              <label id="number-label">Your age</label>
-              <input id="number" name="age" type="number" min="10" max="125" class="form-control" id="number" placeholder="Age" required>
-            </div>
-            <div class="form-group">
-              <label for="exampleFormControlSelect2">I mainly listen to:</label>
-              <select class="form-control" id="dropdown" name="userMusic">
-                <option>Pop Music</option>
-                <option>Secondary Eduction</option>
-                <option>Bachelors Degree</option>
-                <option>Masters</option>
-                <option>PHd</option>
-              </select>
-            </div>
+
             <hr>
-            <div class="radiobuttons">
-              <p>I want to use Moodchime to:</p>
-              <ul style="list-style: none;">
-                <li class="radio"><input name="usage" value="relax" type="radio" class="usage"><label> Relax/Meditate</label></li>
-                <li class="radio"><input name="usage" value="stabilize" type="radio" class="usage"><label> Help stabilize my mood</label></li>
-                <li class="radio"><input name="usage" value="trauma" type="radio" class="usage"><label> Help me cope with trauma</label></li>
-                <li class="radio"><input name="usage" value="focus" type="radio" class="usage"><label> Increase focus skills</label></li>
-                <li class="radio"><input name="usage" value="music" type="radio" class="usage"><label> Listen to some good music</label></li>
-              </ul>
+
+            <div class="setTwo">
+              <div class="radiobuttons">
+                <p>I want to use duanote to:</p>
+                <ul style="list-style: none;">
+                  <li class="radio"><input name="usage" value="relax" type="radio" class="usage"><label> Relax/Meditate</label></li>
+                  <li class="radio"><input name="usage" value="stabilize" type="radio" class="usage"><label> Help stabilize my mood</label></li>
+                  <li class="radio"><input name="usage" value="trauma" type="radio" class="usage"><label> Help me cope with trauma</label></li>
+                  <li class="radio"><input name="usage" value="focus" type="radio" class="usage"><label> Increase focus skills</label></li>
+                  <li class="radio"><input name="usage" value="music" type="radio" class="usage"><label> Listen to some personalized music</label></li>
+                </ul>
+              </div>
+              <div class="formHide">
+                <p>Do you struggle with any of these? (select all that apply)</p>
+                <ul class="checkboxlabel">
+                  <li class="checkbox" style="list-style: none;"><label> <input name="userChoice" value="1" type="checkbox" class="userChoice">Anxiety</label></li>
+                  <li class="checkbox" style="list-style: none;"><label> <input name="userChoice" value="2" type="checkbox" class="userChoice">Depression</label></li>
+                  <li class="checkbox" style="list-style: none;"><label> <input name="userChoice" value="3" type="checkbox" class="userChoice">Focus</label></li>
+                  <li class="checkbox" style="list-style: none;"><label> <input name="userChoice" value="4" type="checkbox" class="userChoice">Panic Attacks</label></li>
+                </ul>
+              </div>
+              <br />
+              <div>
+                <button id="submit" type="submit" class="get-started-btn cred-btn" style="float:right">Next</button>
+              </div>
+            </form>
+          </div>
             </div>
-            <div>
-              <p>Do you struggle with any of these? (select all that apply)</p>
-              <ul class="checkboxlabel">
-                <li class="checkbox" style="list-style: none;"><label> <input name="userChoice" value="1" type="checkbox" class="userChoice">Anxiety</label></li>
-                <li class="checkbox" style="list-style: none;"><label> <input name="userChoice" value="2" type="checkbox" class="userChoice">Depression</label></li>
-                <li class="checkbox" style="list-style: none;"><label> <input name="userChoice" value="3" type="checkbox" class="userChoice">Focus</label></li>
-                <li class="checkbox" style="list-style: none;"><label> <input name="userChoice" value="4" type="checkbox" class="userChoice">Panic Attacks</label></li>
-              </ul>
-            </div>
-            <br />
-            <div>
-              <button id="submit" type="submit" class="rainbow" style="float:right">Submit</button>
-            </div>
-          </form>
-        </div>
+
         
       </div>
 
@@ -105,7 +114,7 @@
   </main><!-- End #main -->
 
   <!-- ======= Footer ======= -->
-<%- include('partials/footer') %>
+<!-- %- include('partials/footer') % -->
 <!-- End Footer -->
 
   <div id="preloader"></div>
@@ -122,6 +131,7 @@
 
   <!-- Template Main JS File -->
   <script src="assets/js/main.js"></script>
+  <script src="assets/js/onboard.js"></script>
 
 </body>
 

@@ -1031,7 +1031,14 @@ section {
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
 }
-
+.spotifyConnect{
+  border: none;
+  outline: none;
+  background: transparent;
+}
+.spotifyConnect img{
+  max-width: 20%;
+}
 .loginLogo{
   font-family: 'MuseoModerno';
   font-weight: 600;
@@ -1058,6 +1065,14 @@ section {
     /* background:  whitesmoke; */
     /* color: white; */
     height: 100%;
+}
+
+.formHide{
+  display: none;
+}
+.onboardMessage{
+  margin-top: 3%;
+  margin-bottom: 3%;
 }
 .header-scrolled li a,
 .header-scrolled .get-started-btn{
