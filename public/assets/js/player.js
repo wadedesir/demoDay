@@ -45,6 +45,7 @@ window.onSpotifyWebPlaybackSDKReady = () => {
 
 document.querySelector('.guided').addEventListener('click', playMedia)
 document.querySelector('.freePlay').addEventListener('click', pauseMedia)
+document.querySelector('.searchButton').addEventListener('click', searchMedia)
 
 async function playMedia(){
   const play = await fetch('/play');
@@ -52,6 +53,14 @@ async function playMedia(){
 }
 
 async function pauseMedia(){
-  const play = await fetch('/pause');
-  console.log(play)
+  const pause = await fetch('/pause');
+  console.log(pause)
+}
+
+async function searchMedia(){
+  let searchQuery = document.querySelector('.searchText').value
+  console.log(searchQuery)
+  const search = await fetch(`/search?artist=${searchQuery}&track="demons"`);
+  console.log(search)
+  const test = await fetch(`/songQueue`);
 }
