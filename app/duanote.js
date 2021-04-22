@@ -49,6 +49,8 @@ function duanote(app, duanotePlayer){
         //if the user making the request is non-premium, a 403 FORBIDDEN response code will be returned
         console.log('Something went wrong while transferring playback!', err);
     }); 
+
+    res.json("success")
     })
 
     app.get('/player', isLoggedIn, async function (req, res) {   

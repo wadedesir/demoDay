@@ -1032,16 +1032,40 @@ section {
   -webkit-text-fill-color: transparent;
 }
 
+.loginLogo{
+  font-family: 'MuseoModerno';
+  font-weight: 600;
+  background: -webkit-linear-gradient(45deg, var(--cc-2), var(--cc-1));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  font-size: 48px;
+  margin: 0;
+  padding: 0;
+  line-height: 1;
+  font-weight: 700;
+  letter-spacing: 2px;
+  text-transform: lowercase;
+
+}
+.signInText{
+  font-size: 20px;
+  font-family: 'MuseoModerno';
+  margin-top: 2%;
+  margin-bottom: 2%;
+}
 #main{
     /* background: -webkit-linear-gradient(-45deg, #371238, var(--cc-1)); */
     /* background:  whitesmoke; */
     /* color: white; */
+    height: 100%;
 }
 .header-scrolled li a,
 .header-scrolled .get-started-btn{
   color: black;
 }
-
+.cover-container {
+  height: 100vh;
+}
 .innerHeader li a{
   color: black;
 }
@@ -1049,11 +1073,14 @@ section {
 .innerHeader .get-started-btn{
   color: black;
 }
+#onboard{
+
+}
 .onboardingPage{
-  background: url("../img/colorfulbg.png");
+  /* background: url("../img/colorfulbg.png");
   background-size: cover;
   background-repeat: no-repeat;
-  background-position: center;
+  background-position: center; */
 }
 
 .btn-main{
@@ -1067,6 +1094,10 @@ section {
   border: 1px solid var(--cc-1);
 }
 
+.loginForm{
+  /* margin-top: 5%;
+  width: 80%; */
+}
 form .cred-btn{
   margin-top: 3%;
 }
