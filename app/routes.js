@@ -90,7 +90,7 @@ function setupRoutes(app, passport, SpotifyWebApi) {
         user.security.accessToken = data.body['access_token'] //update server side access token
         const result = await user.save()
         
-        req.user.setup == 3 ? res.redirect('/user') : res.redirect('/getSeeds')
+        req.user.setup == 2 ? res.redirect('/user') : res.redirect('/getSeeds')
         
       } else if (req.user.setup == 1){ //done onboarding but no spotify
         res.redirect('/connect')
