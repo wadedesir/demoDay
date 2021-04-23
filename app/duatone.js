@@ -81,7 +81,7 @@ function duatone(app, duatonePlayer){
     })  
 
     app.get('/search', isLoggedIn, async function (req, res) {
-    
+        res.setHeader('Content-Type', 'application/json');
         // Get available genre seeds
         // duatonePlayer.getAvailableGenreSeeds()
         // .then(function(data) {
@@ -90,30 +90,29 @@ function duatone(app, duatonePlayer){
         // }, function(err) {
         //     console.log('Something went wrong!', err);
         // });
+
         if(req.query.artist){
-            console.log(req.query)
-            duatonePlayer.searchArtists(req.query.artist)
-                .then(function(data) {
-                    console.log('Search artists by ' + req.query.artist, data.body);
-                    console.log("query items: ", data.body.artists.items)
-                }, function(err) {
-                    console.error(err);
-                });
+            console.log('Search artists by ' + req.query.artist);
+            
+            let result = await duatonePlayer.searchArtists(req.query.artist, {limit : 3})
+            .catch(err => console.log(err))
+            // console.log("query items: ", result.body.artists.items)
+            res.json(result.body.artists.items)
+
         }
         else if (req.query.track){
 
-            duatonePlayer.searchTracks(`track:${req.query.tracks}`, {limit: 1})
-            .then(function(data) {
-            console.log(`Search tracks by ${req.query.tracks}`, data.body, data.body.tracks.items);
-            }, function(err) {
-            console.log('Something went wrong!', err);
-            });
+            let result = await duatonePlayer.searchTracks(`track:${req.query.track}`, {limit: 3})
+            .catch(err => console.log(err))
+            // console.log("query items: ", result.body.tracks.items)
+            res.json(result.body.tracks.items)
     
         }
         
-        res.json("success")
+        res.json(JSON.stringify("success"))
     })
 
+    app.put('/saveQuery')
     app.get('/songQueue', isLoggedIn, async function (req, res) {
         duatonePlayer.getRecommendations({
             limit: 1,

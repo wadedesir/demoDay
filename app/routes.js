@@ -72,15 +72,15 @@ function setupRoutes(app, passport, SpotifyWebApi) {
     }
   });
 
-  app.get('/getSeeds', isLoggedIn, async function (req, res) { 
+  // app.get('/getSeeds', isLoggedIn, async function (req, res) { 
 
-    res.render('seeds.ejs', { loggedIn: true, user: req.user.name.first });
-  })
+    
+  // })
 
   app.get('/onboarding', async function (req, res) {
     if (req.user) { // logged in
        
-      if (req.user.setup == 2 || req.user.setup == 3) { //if completed all onboarding
+      if (req.user.setup === 2 || req.user.setup === 3) { //if completed all onboarding
         duatonePlayer.setAccessToken(req.user.security.accessToken); //old access token
         duatonePlayer.setRefreshToken(req.user.security.refreshToken); 
         const data = await duatonePlayer.refreshAccessToken() //refresh access token with refresh token
@@ -90,7 +90,7 @@ function setupRoutes(app, passport, SpotifyWebApi) {
         user.security.accessToken = data.body['access_token'] //update server side access token
         const result = await user.save()
         
-        req.user.setup == 2 ? res.redirect('/user') : res.redirect('/getSeeds')
+        req.user.setup === 3 ? res.redirect('/user') : res.render('seed.ejs');
         
       } else if (req.user.setup == 1){ //done onboarding but no spotify
         res.redirect('/connect')
@@ -101,7 +101,8 @@ function setupRoutes(app, passport, SpotifyWebApi) {
       }
     }else {
     // not logged in
-    res.render('onboarding.ejs', {loggedIn: false, user: ''});
+    res.redirect('/login')
+    // res.render('onboarding.ejs', {loggedIn: false, user: ''});
     }
 
   });

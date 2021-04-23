@@ -1,6 +1,11 @@
 // window.onSpotifyWebPlaybackSDKReady = () => {
 //     // You can now initialize Spotify.Player and use the SDK
 //   };
+document.querySelector('.guided').addEventListener('click', playMedia)
+document.querySelector('.freePlay').addEventListener('click', pauseMedia)
+document.querySelector('.searchButton').addEventListener('click', searchMedia)
+
+
 async function getToken(){
     const fetchToken = await fetch('/token');
     console.log(fetchToken)
@@ -43,10 +48,6 @@ window.onSpotifyWebPlaybackSDKReady = () => {
     player.connect();
   };
 
-document.querySelector('.guided').addEventListener('click', playMedia)
-document.querySelector('.freePlay').addEventListener('click', pauseMedia)
-document.querySelector('.searchButton').addEventListener('click', searchMedia)
-
 async function playMedia(){
   const play = await fetch('/play');
   console.log(play)
@@ -55,12 +56,4 @@ async function playMedia(){
 async function pauseMedia(){
   const pause = await fetch('/pause');
   console.log(pause)
-}
-
-async function searchMedia(){
-  let searchQuery = document.querySelector('.searchText').value
-  console.log(searchQuery)
-  const search = await fetch(`/search?artist=${searchQuery}&track="demons"`);
-  console.log(search)
-  const test = await fetch(`/songQueue`);
 }

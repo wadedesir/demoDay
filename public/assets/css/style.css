@@ -1058,8 +1058,23 @@ section {
   font-size: 20px;
   font-family: 'MuseoModerno';
   margin-top: 2%;
-  margin-bottom: 2%;
+  margin-bottom: 0;
 }
+.seedText{
+  font-size: 18px;
+  font-family: 'MuseoModerno';
+  margin-top: 1%;
+  margin-bottom: 1%;
+}
+.seedSpan{
+  text-decoration: line-through;
+}
+.searchInputs{
+  height: 50%;
+  /* width: 50%; */
+  /* padding: 10%; */
+}
+
 #main{
     /* background: -webkit-linear-gradient(-45deg, #371238, var(--cc-1)); */
     /* background:  whitesmoke; */
@@ -1219,6 +1234,56 @@ svg {
   display: inline-block;
   margin-left: 0;
   /* width: 10%; */
+}
+
+.albumInfo{
+  height: 75%;
+  width: 100%;
+  border: 1px solid #18d26e;
+}
+.albumArt{
+  height: 60%;
+  width: 50%;
+  border: 1px solid gold;
+}
+.controlWrapper{
+  width: 40%;
+}
+.musicControls{
+
+}
+.searchResults{
+  height: 100%;
+  border: 1px solid black;
+
+}
+.searchDisplay{
+  border: 1px solid black;
+  height: 20vh;
+  width: 20%;
+  background-size: cover;
+  background-position: center;
+}
+.searchDisplay:hover{
+  cursor: pointer;
+}
+.artistName{
+  font-weight: bold;
+  color: white;
+}
+.lowerage{
+  border: 1px solid black;
+}
+/* .albumData{
+  width: 100%;
+  height: 15%;
+  border: 1px solid green;
+} */
+.controlWrapper{
+  /* height: 80%; */
+  height: 15%;
+  width: 100%;
+  border: 1px solid #18d26e;
 }
 
 .playCard{

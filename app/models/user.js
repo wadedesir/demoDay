@@ -23,6 +23,10 @@ const userSchema = mongoose.Schema({
   security: {
     refreshToken: String,
     accessToken: String
+  },
+  songData : {
+    artists: [],
+    songs: []
   }
 
 });
