@@ -76,6 +76,13 @@ function setupRoutes(app, passport, SpotifyWebApi) {
 
     
   // })
+  app.get('/set3', async function(req,res) {
+    
+    const user = await User.findById(req.user._id)
+    user.setup = 3 //update server side access token
+    const result = await user.save()
+    res.redirect('/player')
+  })
 
   app.get('/onboarding', async function (req, res) {
     if (req.user) { // logged in
@@ -90,7 +97,7 @@ function setupRoutes(app, passport, SpotifyWebApi) {
         user.security.accessToken = data.body['access_token'] //update server side access token
         const result = await user.save()
         
-        req.user.setup === 3 ? res.redirect('/user') : res.render('seed.ejs');
+        req.user.setup === 3 ? res.redirect('/player') : res.render('seed.ejs');
         
       } else if (req.user.setup == 1){ //done onboarding but no spotify
         res.redirect('/connect')

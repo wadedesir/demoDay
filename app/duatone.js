@@ -112,12 +112,11 @@ function duatone(app, duatonePlayer){
         res.json(JSON.stringify("success"))
     })
 
-    app.put('/saveQuery')
     app.get('/songQueue', isLoggedIn, async function (req, res) {
         duatonePlayer.getRecommendations({
             limit: 1,
             target_energy: 0.2,
-            seed_artists: ['5Pwc4xIPtQLFEnJriah9YJ', '53XhwfbYqKCa1cC15pYq2q'],
+            seed_artists: ['75JFxkI2RXiU7L9VXzMkle', '53XhwfbYqKCa1cC15pYq2q'],
             min_popularity: 50
           })
         .then(function(data) {

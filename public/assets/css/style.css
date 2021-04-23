@@ -1254,11 +1254,11 @@ svg {
 }
 .searchResults{
   height: 100%;
-  border: 1px solid black;
+  /* border: 1px solid black; */
 
 }
 .searchDisplay{
-  border: 1px solid black;
+  /* border: 1px solid black; */
   height: 20vh;
   width: 20%;
   background-size: cover;
@@ -1266,13 +1266,14 @@ svg {
 }
 .searchDisplay:hover{
   cursor: pointer;
+  border: 1px solid transparent;
 }
 .artistName{
   font-weight: bold;
   color: white;
 }
 .lowerage{
-  border: 1px solid black;
+  /* border: 1px solid black; */
 }
 /* .albumData{
   width: 100%;

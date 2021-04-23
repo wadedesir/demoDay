@@ -1,9 +1,8 @@
 // window.onSpotifyWebPlaybackSDKReady = () => {
 //     // You can now initialize Spotify.Player and use the SDK
 //   };
-document.querySelector('.guided').addEventListener('click', playMedia)
-document.querySelector('.freePlay').addEventListener('click', pauseMedia)
-document.querySelector('.searchButton').addEventListener('click', searchMedia)
+document.querySelector('.playCard').addEventListener('click', playMedia)
+// document.querySelector('.searchButton').addEventListener('click', searchMedia)
 
 
 async function getToken(){
