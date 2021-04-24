@@ -7,12 +7,12 @@ function duatoneSetup(SpotifyWebApi){ //generate duatonePlayer and User objects
     const duatonePlayer = new SpotifyWebApi({
         clientId: '1f3c90c77fce4b60bd9e18d35175bd86',
         clientSecret: '8758a46abe0a4ff2abb77245a9b64c2d',
-        redirectUri: 'http://moodchime.http://duanote-env.eba-4kvcwdbb.us-east-2.elasticbeanstalk.com/connect.com/connect'
+        redirectUri: 'http://duanote-env.eba-4kvcwdbb.us-east-2.elasticbeanstalk.com/connect'
         });
       
         //generate spotify auth url for user
         const scopes = ['user-read-private', 'user-read-email', 'user-read-recently-played', 'user-top-read', 'user-modify-playback-state', 'user-follow-read', 'user-library-modify', 'user-library-read', 'streaming', 'user-read-playback-state', 'user-read-currently-playing', 'app-remote-control'],
-        redirectUri = 'http://http://duanote-env.eba-4kvcwdbb.us-east-2.elasticbeanstalk.com/connect.herokuapp.com/connect',
+        redirectUri = 'http://duanote-env.eba-4kvcwdbb.us-east-2.elasticbeanstalk.com/connect',
         clientId = '1f3c90c77fce4b60bd9e18d35175bd86',
         state = 'duatone';
       
