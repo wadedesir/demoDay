@@ -7,12 +7,12 @@ function duatoneSetup(SpotifyWebApi){ //generate duatonePlayer and User objects
     const duatonePlayer = new SpotifyWebApi({
         clientId: '1f3c90c77fce4b60bd9e18d35175bd86',
         clientSecret: '8758a46abe0a4ff2abb77245a9b64c2d',
-        redirectUri: 'http://duanote-env.eba-4kvcwdbb.us-east-2.elasticbeanstalk.com/connect'
+        redirectUri: 'http://duatone.herokuapp.com/connect'
         });
       
         //generate spotify auth url for user
         const scopes = ['user-read-private', 'user-read-email', 'user-read-recently-played', 'user-top-read', 'user-modify-playback-state', 'user-follow-read', 'user-library-modify', 'user-library-read', 'streaming', 'user-read-playback-state', 'user-read-currently-playing', 'app-remote-control'],
-        redirectUri = 'http://duanote-env.eba-4kvcwdbb.us-east-2.elasticbeanstalk.com/connect',
+        redirectUri = 'http://duatone.herokuapp.com/connect',
         clientId = '1f3c90c77fce4b60bd9e18d35175bd86',
         state = 'duatone';
       
@@ -35,11 +35,12 @@ function duatone(app, duatonePlayer){
     let duatonePlayerDeviceId
     
     app.get('/initializePlayer', isLoggedIn, async function (req, res) {
-    const availableDevices = await duatonePlayer.getMyDevices()
+    availableDevices = await duatonePlayer.getMyDevices()
     .catch(error => console.error(error))
   
     console.log(availableDevices.body.devices);
-    duatonePlayerDevice = availableDevices.body.devices.filter( device => device.name == "duatone Player")
+    duatonePlayerDevice = availableDevices.body.devices.filter( device => device.name == "Duatone Player")
+    console.log("device: ", duatonePlayerDevice)
     duatonePlayerDeviceId = [duatonePlayerDevice[0].id]
 
     duatonePlayer.transferMyPlayback(duatonePlayerDeviceId)

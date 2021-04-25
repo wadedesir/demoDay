@@ -17,7 +17,7 @@ const token = getToken()
 window.onSpotifyWebPlaybackSDKReady = () => {
     
     const player = new Spotify.Player({
-      name: 'Duanote Player',
+      name: 'Duatone Player',
       getOAuthToken: cb => { cb(token); }
     });
   
