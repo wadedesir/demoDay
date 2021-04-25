@@ -114,5 +114,12 @@ function addData(){
 }
 
 async function submitSongs(){
-    let response = await fetch('/seed?done=true', {method: 'POST'})
+    let response = await fetch('/seed?done=true' {method: 'POST'})
+    let data = await response.json()
+    if(data == 'success'){
+        console.log('seed success')
+        let redirect = await fetch('/seed') 
+    }else{
+
+    }
 }
