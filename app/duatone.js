@@ -130,14 +130,6 @@ function duatone(app, duatonePlayer){
     })  
 }
 
-
-// spotifyApi.getArtists(['2hazSY4Ef3aB9ATXW7F5w3', '6J6yx1t3nwIDyPXk5xa7O8'])
-//   .then(function(data) {
-//     console.log('Artists information', data.body);
-//   }, function(err) {
-//     console.error(err);
-//   });
-
 // route middleware to ensure user is logged in
 function isLoggedIn(req, res, next) {
     if (req.isAuthenticated()) {
