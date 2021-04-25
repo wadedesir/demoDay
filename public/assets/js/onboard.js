@@ -1,6 +1,6 @@
 document.querySelector('#searchBtnArtist').addEventListener('click', searchArtist)
 document.querySelector('#searchBtnTrack').addEventListener('click', searchTrack)
-document.querySelector('.complete').addEventListener('click', submit)
+document.querySelector('#submit').addEventListener('click', submitSongs)
 let artist //?
 let artistSeeds = [] //selected seeds that will be sent to DB
 let trackSeeds = [] 
@@ -113,6 +113,6 @@ function addData(){
 
 }
 
-async function submit(){
+async function submitSongs(){
     let response = await fetch('/seed?done=true', {method: 'POST'})
 }
