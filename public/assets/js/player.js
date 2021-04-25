@@ -48,6 +48,7 @@ window.onSpotifyWebPlaybackSDKReady = () => {
   };
 
 async function playMedia(){
+  const play = await fetch('/queue');
   const play = await fetch('/play');
   console.log(play)
 }

@@ -91,7 +91,7 @@ function setupRoutes(app, passport, SpotifyWebApi) {
     }
   })
 
-  app.get('/onboarding', isLoggedIn, async function (req, res) {
+  app.get('/onboard', isLoggedIn, async function (req, res) {
     if (req.user) { // logged in
        
       if (req.user.setup === 2 || req.user.setup === 3) { //if completed all onboarding
@@ -121,7 +121,7 @@ function setupRoutes(app, passport, SpotifyWebApi) {
 
   });
 
-  app.post('/Onboarding', isLoggedIn, async function (req, res) {
+  app.post('/Onboard', isLoggedIn, async function (req, res) {
     //Grab data from DOM
     const moodData = {listen: req.body.userMusic, usage: req.body.usage, triggers : req.body.userChoice}
     const name = {first: req.body.firstName, last: req.body.lastName}
@@ -164,7 +164,7 @@ function setupRoutes(app, passport, SpotifyWebApi) {
 
   // process the login form
   app.post('/login', passport.authenticate('local-login', {
-    successRedirect: '/onboarding', // redirect to the secure profile section
+    successRedirect: '/onboard', // redirect to the secure profile section
     failureRedirect: '/login', // redirect back to the signup page if there is an error
     failureFlash: true // allow flash messages
   }));
@@ -177,7 +177,7 @@ function setupRoutes(app, passport, SpotifyWebApi) {
 
   // process the signup form
   app.post('/signup', passport.authenticate('local-signup', {
-    successRedirect: '/onboarding', // redirect to the secure profile section
+    successRedirect: '/onboard', // redirect to the secure profile section
     failureRedirect: '/signup', // redirect back to the signup page if there is an error
     failureFlash: true // allow flash messages
   }));

@@ -105,11 +105,11 @@ function duatone(app, duatonePlayer){
         res.json("success")
     })
 
-    app.get('/songQueue', isLoggedIn, async function (req, res) {
+    app.get('/queue', isLoggedIn, async function (req, res) {
         duatonePlayer.getRecommendations({
-            limit: 1,
+            // limit: 1,
             target_energy: 0.2,
-            seed_artists: ['75JFxkI2RXiU7L9VXzMkle', '53XhwfbYqKCa1cC15pYq2q'],
+            seed_artists: ['75JFxkI2RXiU7L9VXzMkle', '53XhwfbYqKCa1cC15pYq2q', '4dpARuHxo51G3z768sgnrY', '00FQb4jTyendYWaN8pK0wa', '6qqNVTkY8uBg9cP3Jd7DAH'],
             min_popularity: 50
           })
         .then(function(data) {
