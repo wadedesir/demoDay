@@ -111,7 +111,7 @@ function setupRoutes(app, passport, SpotifyWebApi) {
       }
       else {
       // not logged in
-      res.render('onboarding.ejs', {loggedIn: true, user: ''});
+      res.render('onboard.ejs', {loggedIn: true, user: ''});
       }
     }else {
     // not logged in
