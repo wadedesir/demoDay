@@ -81,7 +81,7 @@ function setupRoutes(app, passport, SpotifyWebApi) {
   })
 
   app.post('/seed', isLoggedIn, async function(req,res) {
-    if (req.query.done){
+    if (req.query.done == 'true'){
       const user = await User.findById(req.user._id)
       user.setup = 3 //update server side access token
       const result = await user.save()

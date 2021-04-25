@@ -83,14 +83,6 @@ function duatone(app, duatonePlayer){
 
     app.get('/search', isLoggedIn, async function (req, res) {
         res.setHeader('Content-Type', 'application/json');
-        // Get available genre seeds
-        // duatonePlayer.getAvailableGenreSeeds()
-        // .then(function(data) {
-        //     let genreSeeds = data.body;
-        //     console.log(genreSeeds);
-        // }, function(err) {
-        //     console.log('Something went wrong!', err);
-        // });
 
         if(req.query.artist){
             console.log('Search artists by ' + req.query.artist);
@@ -110,7 +102,7 @@ function duatone(app, duatonePlayer){
     
         }
         
-        res.json(JSON.stringify("success"))
+        res.json("success")
     })
 
     app.get('/songQueue', isLoggedIn, async function (req, res) {
