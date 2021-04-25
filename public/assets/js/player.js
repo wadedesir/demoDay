@@ -1,9 +1,11 @@
 // window.onSpotifyWebPlaybackSDKReady = () => {
 //     // You can now initialize Spotify.Player and use the SDK
 //   };
-document.querySelector('.playCard').addEventListener('click', playMedia)
+document.querySelector('#play').addEventListener('click', playMedia)
+document.querySelector('#pause').addEventListener('click', pauseMedia)
 // document.querySelector('.searchButton').addEventListener('click', searchMedia)
-
+let queue
+let firstRun = true
 
 async function getToken(){
     const fetchToken = await fetch('/token');
@@ -48,8 +50,12 @@ window.onSpotifyWebPlaybackSDKReady = () => {
   };
 
 async function playMedia(){
-  const queue = await fetch('/queue');
-  const play = await fetch('/play');
+  
+  if (firstRun){
+    const queueData = await fetch('/queue');
+    queue = await queueData.json()
+  }
+  let play = await fetch(`/play`);
   console.log(play)
   console.log(queue)
 }

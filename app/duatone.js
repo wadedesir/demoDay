@@ -33,7 +33,7 @@ function duatoneSetup(SpotifyWebApi){ //generate duatonePlayer and User objects
 function duatone(app, duatonePlayer){
     let duatonePlayerDevice
     let duatonePlayerDeviceId
-    
+    let firstRunTracks
     app.get('/initializePlayer', isLoggedIn, async function (req, res) {
     availableDevices = await duatonePlayer.getMyDevices()
     .catch(error => console.error(error))
@@ -74,7 +74,7 @@ function duatone(app, duatonePlayer){
     })
   
     app.get('/play', isLoggedIn, async function (req, res) {   
-    const result = await duatonePlayer.play({context_uri: "spotify:album:5ht7ItJgpBH7W6vJ5BqpPr"})
+    const result = await duatonePlayer.play()
     .catch(err => {
         console.log('Something went wrong!', err);
     })
@@ -106,19 +106,28 @@ function duatone(app, duatonePlayer){
     })
 
     app.get('/queue', isLoggedIn, async function (req, res) {
-        duatonePlayer.getRecommendations({
+        recs = await duatonePlayer.getRecommendations({
             // limit: 1,
             target_energy: 0.2,
             seed_artists: ['75JFxkI2RXiU7L9VXzMkle', '53XhwfbYqKCa1cC15pYq2q', '4dpARuHxo51G3z768sgnrY', '00FQb4jTyendYWaN8pK0wa', '6qqNVTkY8uBg9cP3Jd7DAH'],
             min_popularity: 50
           })
-        .then(function(data) {
-          let recommendations = data.body;
-          console.log(recommendations);
-        }, function(err) {
-          console.log("Something went wrong!", err);
-        });
+        .catch(err => console.log(err))
+        console.log(recs.body.tracks)
+
+        trackUris = recs.body.tracks.map( track => track.uri)
+        firstRunTracks = trackUris 
+        // res.json(JSON.stringify(trackUris))
+        res.redirect('/playStart')
     })
+
+    app.get('/playStart', isLoggedIn, async function (req, res) {   
+        const result = await duatonePlayer.play({uris: firstRunTracks})
+        .catch(err => {
+            console.log('Something went wrong!', err);
+        })
+        res.json("success")
+    })  
 }
 
 
