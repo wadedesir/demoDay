@@ -52,9 +52,9 @@ window.onSpotifyWebPlaybackSDKReady = () => {
 async function loadMedia(){
   const queueData = await fetch('/queue');
   queue = await queueData.json()
-  queue = queue.map(songUri => songUri.slice(songUri.lastIndexOf(':') + 1))
-  console.log(queue)
-  addRecents(queue)
+  songId = queue.map(songUri => songUri.slice(songUri.lastIndexOf(':') + 1))
+  console.log(songId)
+  addRecents(songId)
   fetch(`/play?tracks=${queue}`)
   firstRun = false
 }

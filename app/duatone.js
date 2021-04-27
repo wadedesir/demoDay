@@ -74,7 +74,7 @@ function duatone(app, duatonePlayer){
     })
   
     app.get('/play', isLoggedIn, async function (req, res) { 
-    
+        console.log('OUR URIS', req.query.tracks.split(','));
         if(req.query.tracks){
             const result = await duatonePlayer.play({uris: req.query.tracks.split(',')})
             .catch(err => {
