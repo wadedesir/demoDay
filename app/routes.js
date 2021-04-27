@@ -81,14 +81,20 @@ function setupRoutes(app, passport, SpotifyWebApi) {
   })
 
   app.post('/seed', isLoggedIn, async function(req,res) {
-    if (req.query.done == 'true'){
-      const user = await User.findById(req.user._id)
-      user.setup = 3 //update server side access token
-      const result = await user.save()
+
+    const user = await User.findById(req.user._id)
+    artists = req.query.artists.split(',')
+    tracks = req.query.tracks.split(',')
+    user.songData.artists = artists
+    user.songData.songs = tracks
+    // console.log('artist: ', artists, 'tracks: ', req.query.tracks);
+    user.setup = 3 //update server side access token
+    const result = await user.save()
+    .then(result => {
       res.json('success')
-    }else{
-      res.json('fail')
-    }
+    })
+    .catch(error => console.error(error))
+
   })
 
   app.get('/onboard', isLoggedIn, async function (req, res) {

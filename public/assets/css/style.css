@@ -1054,12 +1054,27 @@ section {
 }
 
 /* wd */
+
 #header h1 {
   font-family: 'MuseoModerno';
   font-weight: 600;
   background: -webkit-linear-gradient(45deg, var(--cc-2), var(--cc-1));
+  background-clip: text;
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
+}
+
+#about h3{
+  color: var(--cc-2);
+  font-size: 37px;
+}
+.about .fst-italic{
+  color: var(--cc-1);
+  font-size: 12px;
+}
+.about p + p{
+  line-height: 2.4;
+  font-size: 17px;
 }
 
 .spotifyConnect {

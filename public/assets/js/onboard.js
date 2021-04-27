@@ -1,13 +1,11 @@
 document.querySelector('#searchBtnArtist').addEventListener('click', searchArtist)
 document.querySelector('#searchBtnTrack').addEventListener('click', searchTrack)
 document.querySelector('#submit').addEventListener('click', submitSongs)
+
 let artist //?
 let artistSeeds = [] //selected seeds that will be sent to DB
 let trackSeeds = [] 
-let activeSearch = { //current searches to be dislayed
-    artist : [],
-    track : []
-}
+let addedFeatures = 0
 
 let displays = document.querySelectorAll('.searchDisplay')
 let artistName = document.querySelectorAll('.artistName')
@@ -64,62 +62,83 @@ async function searchTrack(){
 }
 
 function displaySearch(searchResults){
+    // if(!searchResults[i]){
 
+    // }
 
-    if(artist){
+    if(artist){  
         for(let i = 0; i < 3; i++){
-            // displays[i].addEventListener('click', _ => addData(searchResults[i].uri, artist, searchResults) )
-            // displays[i].onClick = addData(this)
-            // displays[i].setAttribute('data-uri', `${searchResults[i].uri.slice(uri.lastIndexOf(':') + 1)}`) 
-            displays[i].style.backgroundImage = `url(${searchResults[i].images[0].url})` 
+            
+            if (searchResults[i].images[0]){
+                displays[i].style.backgroundImage = `url(${searchResults[i].images[0].url})`
+            }else{
+                displays[i].style.backgroundImage = `url(assets/img/spotifyIcon.png)`
+            } 
+            displays[i].setAttribute('data-uri', `${searchResults[i].id}`) 
             artistName[i].innerText = searchResults[i].name
         }
     }else{
         for(let i = 0; i < 3; i++){
-            // displays[i].addEventListener('click', _ => addData(searchResults[i].uri, artist, searchResults) )
-            // displays[i].onClick = addData(searchResults[i].uri, artist, searchResults)
-            // displays[i].onClick = e => console.log(e.target)
-            // displays[i].setAttribute('data-uri', `${searchResults[i].uri.slice(uri.lastIndexOf(':') + 1)}`) 
-            // displays[i].dataset.uri = searchResults[i].uri.slice(uri.lastIndexOf(':') + 1)
-            displays[i].style.backgroundImage = `url(${searchResults[i].album.images[0].url})` 
+            if (searchResults[i].album.images[0].url){
+                displays[i].style.backgroundImage = `url(${searchResults[i].album.images[0].url})` 
+            }else{
+                displays[i].style.backgroundImage = `url(assets/img/spotifyIcon.png)`
+            }
+            
+            displays[i].setAttribute('data-uri', `${searchResults[i].id}`) 
             artistName[i].innerText = searchResults[i].name
         }
     }
 
 }
 
-function addData(){
-    // console.log(this.target('data-uri'))
-    if (artist){
-        for(let i = 0; i < 3; i++){
-            // displays[i].removeEventListener('click', _ => addData(searchResults[i].uri, artist, searchResults) )
-            // display[i].removeEventListener('click', _ => addData(searchResults[i].uri) )
-            displays[i].style.backgroundImage = `` 
-            artistName[i].innerText = ""
+function addData(event){
+    console.log(event.target.getAttribute('data-uri'))
+    data = event.target.getAttribute('data-uri')
+    if (data === null){
+        alert('Error adding new item. Please try again.')
+        return 
+    }
+
+    if (addedFeatures <= 10){
+        
+        if (artist){
+            for(let i = 0; i < 3; i++){
+                displays[i].style.backgroundImage = `` 
+                artistName[i].innerText = ""
+                document.querySelector('.artistSearch').value = ''
+            }
+            artistSeeds.includes(data) ? alert("This artist has already been added") : artistSeeds.push(data)
+        }else{
+            for(let i = 0; i < 3; i++){
+                displays[i].style.backgroundImage = `` 
+                artistName[i].innerText = ""
+                document.querySelector('.trackSearch').value = ''
+            }
+    
+            trackSeeds.includes(data) ? alert("This song has already been added") : trackSeeds.push(data)
         }
-        // artistSeeds.includes(this.dataset.uri) ? true : artistSeeds.push(this.dataset.uri)
-    }else{
-        for(let i = 0; i < 3; i++){
-            // displays[i].removeEventListener('click', _ => addData(searchResults[i].uri, artist, searchResults))
-            // display[i].removeEventListener('click', _ => addData(searchResults[i].uri) )
-            displays[i].style.backgroundImage = `` 
-            artistName[i].innerText = ""
-        }
-        // trackSeeds.includes(data) ? true : trackSeeds.push(data)
+        addedFeatures += 1
     }
 
     artist = null
-    // console.log(artistSeeds, "tracks" + trackSeeds);
+    // console.log('artists: ', artistSeeds, 'songs: ', trackSeeds)
 
 }
 
 async function submitSongs(){
-    let response = await fetch('/seed?done=true', {method: 'POST'})
-    let data = await response.json()
-    if(data == 'success'){
-        console.log('seed success')
-        window.location.href = "/onboard";
+    if(addedFeatures >= 5){
+        
+        let sendData = await fetch(`/seed?artists=${artistSeeds}&tracks=${trackSeeds}`, {method: 'POST'})
+        let result = await sendData.json()
+        if(result == 'success'){
+            console.log('seed success')
+            window.location.href = "/onboard";
+        }else{
+            alert('error sending data to server. Please try again.')
+        }
     }else{
-
+        alert('Please make at least 5 selections before moving forward')
     }
+    
 }
