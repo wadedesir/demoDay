@@ -109,6 +109,12 @@ function setupRoutes(app, passport, SpotifyWebApi) {
 
   })
 
+  app.get('/recents', isLoggedIn, async function (req, res) {
+    
+    let recents = req.user.songData.recents
+    res.json(recents)
+})
+
   app.post('/recents', isLoggedIn, async function (req, res) {
     let recents = req.user.songData.recents
     recents.concat(req.body)
