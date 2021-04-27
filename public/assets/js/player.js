@@ -52,9 +52,10 @@ window.onSpotifyWebPlaybackSDKReady = () => {
 async function loadMedia(){
   const queueData = await fetch('/queue');
   queue = await queueData.json()
+  queue = queue.map(songUri => songUri.slice(songUri.lastIndexOf(':') + 1))
   console.log(queue)
   addRecents(queue)
-  fetch(`/play?tracks${queue}`)
+  fetch(`/play?tracks=${queue}`)
   firstRun = false
 }
 
@@ -75,8 +76,8 @@ async function pauseMedia(){
 }
 
 async function addRecents(queue){
-  let songIds = queue.map(songUri => songUri.slice(songUri.lastIndexOf(':') + 1))
-  let data = await fetch(`/tracks?songs=${songIds}`)
+  // let songIds = queue.map(songUri => songUri.slice(songUri.lastIndexOf(':') + 1))
+  let data = await fetch(`/tracks?songs=${queue}`)
   let songData = await data.json()
   console.log(songData)
 
