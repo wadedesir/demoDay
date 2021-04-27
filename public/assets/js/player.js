@@ -92,15 +92,19 @@ async function addRecents(queue){
 }
 
 
-var canvas = document.getElementById('paint');
-var ctx = canvas.getContext('2d');
+/*--------------------------------------------------------------
+# Drawing
+--------------------------------------------------------------*/
+
+let canvas = document.getElementById('paint');
+let ctx = canvas.getContext('2d');
  
-var sketch = document.getElementById('sketch');
-var sketch_style = getComputedStyle(sketch);
+let sketch = document.getElementById('sketch');
+let sketch_style = getComputedStyle(sketch);
 canvas.width = 500;
 canvas.height = 250;
 
-var mouse = {x: 0, y: 0};
+let mouse = {x: 0, y: 0};
  
 /* Mouse Capturing Work */
 canvas.addEventListener('mousemove', function(e) {
@@ -132,7 +136,19 @@ canvas.addEventListener('mouseup', function() {
     canvas.removeEventListener('mousemove', onPaint, false);
 }, false);
  
-var onPaint = function() {
+let onPaint = function() {
     ctx.lineTo(mouse.x, mouse.y);
     ctx.stroke();
 };
+
+async function saveSketch(){
+  let dataURL = canvas.toDataURL();
+
+  if(confirm('Are you sure you want to save? This sketchad will be reset after drawing has been saved to your account.')){
+    let save = await fetch(`/saveSketch?sketch=${dataURL}`, {method: 'POST'})
+    let result = save.json()
+    ctx.clearRect(0, 0, ctx.canvas.width, ctx.canvas.height);
+  }
+
+
+}

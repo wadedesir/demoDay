@@ -28,6 +28,9 @@ const userSchema = mongoose.Schema({
     artists: [],
     songs: [],
     recents: [ [] ] 
+  },
+  activities : {
+    sketches: []
   }
 
 });

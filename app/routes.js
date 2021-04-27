@@ -8,9 +8,9 @@ function setupRoutes(app, passport, SpotifyWebApi) {
   //duatone specific setup
   let duatonePlayer, duatoneUser, authorizeURL
 
-  [duatonePlayer, duatoneUser, authorizeURL] = duatone.setup(SpotifyWebApi) //set duatone values returned frm duatone.js
+  [duatonePlayer, duatoneUser, authorizeURL] = duatone.setup(SpotifyWebApi, User) //set duatone values returned frm duatone.js
 
-  duatone.start(app, duatonePlayer)
+  duatone.start(app, duatonePlayer, User)
 
   // normal routes ===============================================================
 
@@ -88,47 +88,6 @@ function setupRoutes(app, passport, SpotifyWebApi) {
     }
   });
 
-  app.get('/seed', isLoggedIn, async function (req, res) {
-    res.render('seed.ejs')
-  })
-
-  app.post('/seed', isLoggedIn, async function (req, res) {
-
-    const user = await User.findById(req.user._id)
-    artists = req.query.artists.split(',')
-    tracks = req.query.tracks.split(',')
-    user.songData.artists = artists
-    user.songData.songs = tracks
-    // console.log('artist: ', artists, 'tracks: ', req.query.tracks);
-    user.setup = 3 //update server side access token
-    const result = await user.save()
-      .then(result => {
-        res.json('success')
-      })
-      .catch(error => console.error(error))
-
-  })
-
-  app.get('/recents', isLoggedIn, async function (req, res) {
-    
-    let recents = req.user.songData.recents
-    res.json(recents)
-})
-
-  app.post('/recents', isLoggedIn, async function (req, res) {
-    let recents = req.user.songData.recents
-    recents = recents.concat(req.body)
-
-    const user = await User.findById(req.user._id)
-    console.log(req.body)
-    user.songData.recents = recents
-    const result = await user.save()
-    .then(result => {
-      res.json('success')
-    })
-    .catch(error => console.error(error))
-    res.json("success")
-})
 
   app.get('/onboard', isLoggedIn, async function (req, res) {
     if (req.user) { // logged in
