@@ -17,39 +17,51 @@ function setupRoutes(app, passport, SpotifyWebApi) {
   // show the home page (will also have our login links)
   app.get('/', function (req, res) {
     if (req.user) {
-    // logged in
-    // console.log(req.user);
-    res.render('index.ejs', { loggedIn: true, user: req.user.name.first });
+      // logged in
+      // console.log(req.user);
+      res.render('index.ejs', {
+        loggedIn: true,
+        user: req.user.name.first
+      });
     } else {
-    // not logged in
-    res.render('index.ejs', { loggedIn: false, user: '' });
+      // not logged in
+      res.render('index.ejs', {
+        loggedIn: false,
+        user: ''
+      });
     }
     // res.render('index.ejs');
   });
 
   app.get('/index.html', function (req, res) {
     if (req.user) {
-    // logged in
-    // console.log(req.user);
-    res.render('index.ejs', { loggedIn: true, user: req.user.name.first });
+      // logged in
+      // console.log(req.user);
+      res.render('index.ejs', {
+        loggedIn: true,
+        user: req.user.name.first
+      });
     } else {
-    // not logged in
-    res.render('index.ejs', { loggedIn: false, user: '' });
+      // not logged in
+      res.render('index.ejs', {
+        loggedIn: false,
+        user: ''
+      });
     }
 
   });
 
   app.get('/connect', isLoggedIn, async function (req, res) {
 
-    if (req.query.error){ //if spotify returns an error
+    if (req.query.error) { //if spotify returns an error
       res.status(404).send(req.query.error)
-    }else if (req.query.code){ //no err, code is returned
+    } else if (req.query.code) { //no err, code is returned
 
       const data = await duatonePlayer.authorizationCodeGrant(req.query.code) //run auth with given code
-      .catch(err => {
-        console.log('Something went wrong!', err);
-      })
-  
+        .catch(err => {
+          console.log('Something went wrong!', err);
+        })
+
       // Set the access token on the API object to use it in later calls
       duatonePlayer.setAccessToken(data.body['access_token']);
       duatonePlayer.setRefreshToken(data.body['refresh_token']);
@@ -61,26 +73,26 @@ function setupRoutes(app, passport, SpotifyWebApi) {
       user.security.refreshToken = duatonePlayer.getRefreshToken()
       user.setup = 2 //so new token is not created.
       const result = await user.save() //actually save the data
-    
-      .then(result => {
-        res.redirect('/onboard')
-      })
-      .catch(error => console.error(error))
 
-    }else{ // first reun then have user connect
-      res.render('connect.ejs', { loggedIn: true, user: req.user.name.first, spotifyUrl: authorizeURL });
+        .then(result => {
+          res.redirect('/onboard')
+        })
+        .catch(error => console.error(error))
+
+    } else { // first reun then have user connect
+      res.render('connect.ejs', {
+        loggedIn: true,
+        user: req.user.name.first,
+        spotifyUrl: authorizeURL
+      });
     }
   });
 
-  // app.get('/getSeeds', isLoggedIn, async function (req, res) { 
-
-    
-  // })
-  app.get('/seed', isLoggedIn, async function(req,res) {
+  app.get('/seed', isLoggedIn, async function (req, res) {
     res.render('seed.ejs')
   })
 
-  app.post('/seed', isLoggedIn, async function(req,res) {
+  app.post('/seed', isLoggedIn, async function (req, res) {
 
     const user = await User.findById(req.user._id)
     artists = req.query.artists.split(',')
@@ -90,47 +102,72 @@ function setupRoutes(app, passport, SpotifyWebApi) {
     // console.log('artist: ', artists, 'tracks: ', req.query.tracks);
     user.setup = 3 //update server side access token
     const result = await user.save()
+      .then(result => {
+        res.json('success')
+      })
+      .catch(error => console.error(error))
+
+  })
+
+  app.post('/recents', isLoggedIn, async function (req, res) {
+    let recents = req.user.songData.recents
+    recents.concat(req.body)
+
+    const user = await User.findById(req.user._id)
+    console.log(req.body)
+    user.songData.recents = recents
+    const result = await user.save()
     .then(result => {
       res.json('success')
     })
     .catch(error => console.error(error))
-
-  })
+    res.json("success")
+})
 
   app.get('/onboard', isLoggedIn, async function (req, res) {
     if (req.user) { // logged in
-       
+
       if (req.user.setup === 2 || req.user.setup === 3) { //if completed all onboarding
         duatonePlayer.setAccessToken(req.user.security.accessToken); //old access token
-        duatonePlayer.setRefreshToken(req.user.security.refreshToken); 
+        duatonePlayer.setRefreshToken(req.user.security.refreshToken);
         const data = await duatonePlayer.refreshAccessToken() //refresh access token with refresh token
         duatonePlayer.setAccessToken(data.body['access_token']); //set new access token
 
         const user = await User.findById(req.user._id)
+
         user.security.accessToken = data.body['access_token'] //update server side access token
         const result = await user.save()
-        
-        req.user.setup === 3 ? res.redirect('/player') : res.redirect('/seed');
-        
-      } else if (req.user.setup == 1){ //done onboarding but no spotify
+
+        req.user.setup === 3 ? res.redirect('/user') : res.redirect('/seed');
+
+      } else if (req.user.setup == 1) { //done onboarding but no spotify
         res.redirect('/connect')
+      } else {
+        // not logged in
+        res.render('onboard.ejs', {
+          loggedIn: true,
+          user: ''
+        });
       }
-      else {
+    } else {
       // not logged in
-      res.render('onboard.ejs', {loggedIn: true, user: ''});
-      }
-    }else {
-    // not logged in
-    res.redirect('/login')
-    // res.render('onboarding.ejs', {loggedIn: false, user: ''});
+      res.redirect('/login')
+      // res.render('onboarding.ejs', {loggedIn: false, user: ''});
     }
 
   });
 
   app.post('/Onboard', isLoggedIn, async function (req, res) {
     //Grab data from DOM
-    const moodData = {listen: req.body.userMusic, usage: req.body.usage, triggers : req.body.userChoice}
-    const name = {first: req.body.firstName, last: req.body.lastName}
+    const moodData = {
+      listen: req.body.userMusic,
+      usage: req.body.usage,
+      triggers: req.body.userChoice
+    }
+    const name = {
+      first: req.body.firstName,
+      last: req.body.lastName
+    }
     const age = req.body.age
     //save data to server
     const user = await User.findById(req.user._id)
@@ -140,15 +177,18 @@ function setupRoutes(app, passport, SpotifyWebApi) {
     user.setup = 1
 
     const result = await user.save()
-    .then(result => {
-      res.redirect('/connect')
-    })
-    .catch(error => console.error(error))
+      .then(result => {
+        res.redirect('/connect')
+      })
+      .catch(error => console.error(error))
   });
 
 
-  app.get('/user', isLoggedIn, function (req, res) { 
-    res.render('user.ejs', { loggedIn: true, user: req.user.name.first });
+  app.get('/user', isLoggedIn, function (req, res) {
+    res.render('user.ejs', {
+      loggedIn: true,
+      user: req.user.name.first
+    });
   })
 
   // LOGOUT ==============================
@@ -165,7 +205,11 @@ function setupRoutes(app, passport, SpotifyWebApi) {
   // LOGIN ===============================
   // show the login form
   app.get('/login', function (req, res) {
-    res.render('login.ejs', { message: req.flash('loginMessage'), loggedIn: false, user: ''});
+    res.render('login.ejs', {
+      message: req.flash('loginMessage'),
+      loggedIn: false,
+      user: ''
+    });
   });
 
   // process the login form
@@ -178,7 +222,11 @@ function setupRoutes(app, passport, SpotifyWebApi) {
   // SIGNUP =================================
   // show the signup form
   app.get('/signup', function (req, res) {
-    res.render('signup.ejs', { message: req.flash('signupMessage'), loggedIn: false, user: '' });
+    res.render('signup.ejs', {
+      message: req.flash('signupMessage'),
+      loggedIn: false,
+      user: ''
+    });
   });
 
   // process the signup form
@@ -189,9 +237,9 @@ function setupRoutes(app, passport, SpotifyWebApi) {
   }));
 
   //for errors
-app.use(function (req, res, next) {
-  res.status(404).send("Sorry can't find that!")
-})
+  app.use(function (req, res, next) {
+    res.status(404).send("Sorry can't find that!")
+  })
 
 };
 
@@ -203,4 +251,3 @@ function isLoggedIn(req, res, next) {
 
   res.redirect('/login');
 }
-

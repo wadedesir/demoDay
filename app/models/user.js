@@ -26,7 +26,8 @@ const userSchema = mongoose.Schema({
   },
   songData : {
     artists: [],
-    songs: []
+    songs: [],
+    recents: [ [] ] 
   }
 
 });

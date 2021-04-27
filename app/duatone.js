@@ -73,16 +73,26 @@ function duatone(app, duatonePlayer){
     res.json("success")
     })
   
-    app.get('/play', isLoggedIn, async function (req, res) {   
-    const result = await duatonePlayer.play()
-    .catch(err => {
-        console.log('Something went wrong!', err);
-    })
-    res.json("success")
+    app.get('/play', isLoggedIn, async function (req, res) { 
+    
+        if(req.query.tracks){
+            const result = await duatonePlayer.play({uris: req.query.tracks.split(',')})
+            .catch(err => {
+                console.log('Something went wrong!', err);
+                res.json("fail")
+            })
+        }else{
+            const result = await duatonePlayer.play()
+            .catch(err => {
+                console.log('Something went wrong!', err);
+                res.json("success")
+            })
+        }
+        res.json("success")
     })  
 
     app.get('/search', isLoggedIn, async function (req, res) {
-        res.setHeader('Content-Type', 'application/json');
+        // res.setHeader('Content-Type', 'application/json');
 
         if(req.query.artist){
             console.log('Search artists by ' + req.query.artist);
@@ -106,28 +116,40 @@ function duatone(app, duatonePlayer){
     })
 
     app.get('/queue', isLoggedIn, async function (req, res) {
+        console.log(req.user.songData.artists);
+        console.log(req.user.songData.songs);
         recs = await duatonePlayer.getRecommendations({
-            // limit: 1,
+            limit: 5,
             target_energy: 0.2,
-            seed_artists: ['75JFxkI2RXiU7L9VXzMkle', '53XhwfbYqKCa1cC15pYq2q', '4dpARuHxo51G3z768sgnrY', '00FQb4jTyendYWaN8pK0wa', '6qqNVTkY8uBg9cP3Jd7DAH'],
+            seed_artists: req.user.songData.artists,
+            seed_tracks: req.user.songData.songs,
             min_popularity: 50
           })
         .catch(err => console.log(err))
         console.log(recs.body.tracks)
 
         trackUris = recs.body.tracks.map( track => track.uri)
-        firstRunTracks = trackUris 
-        // res.json(JSON.stringify(trackUris))
-        res.redirect('/playStart')
+        // firstRunTracks = trackUris 
+        res.json(trackUris)
+        // res.redirect('/playStart')
     })
 
-    app.get('/playStart', isLoggedIn, async function (req, res) {   
-        const result = await duatonePlayer.play({uris: firstRunTracks})
-        .catch(err => {
-            console.log('Something went wrong!', err);
-        })
-        res.json("success")
-    })  
+    app.get('/tracks', isLoggedIn, async function (req, res) {
+        let tracks = req.query.songs.split(',')
+        // tracks
+        console.log(tracks);
+        trackData = await duatonePlayer.getTracks(tracks)
+        res.json(trackData)
+    })
+
+
+    // app.get('/playStart', isLoggedIn, async function (req, res) {   
+    //     const result = await duatonePlayer.play({uris: firstRunTracks})
+    //     .catch(err => {
+    //         console.log('Something went wrong!', err);
+    //     })
+    //     res.json("success")
+    // })  
 }
 
 // route middleware to ensure user is logged in

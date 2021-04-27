@@ -49,22 +49,46 @@ window.onSpotifyWebPlaybackSDKReady = () => {
     player.connect();
   };
 
+async function loadMedia(){
+  const queueData = await fetch('/queue');
+  queue = await queueData.json()
+  console.log(queue)
+  addRecents(queue)
+  fetch(`/play?tracks${queue}`)
+  firstRun = false
+}
+
 async function playMedia(){
   
   if (firstRun){
-    const queueData = await fetch('/queue');
-    queue = await queueData.json()
+    loadMedia()
+  }else{
+    fetch(`/play`);
   }
-  let play = await fetch(`/play`);
   // console.log(play)
   // console.log(queue)
 }
 
 async function pauseMedia(){
-  const pause = await fetch('/pause');
+  fetch('/pause');
   // console.log(pause)
 }
 
+async function addRecents(queue){
+  let songIds = queue.map(songUri => songUri.slice(songUri.lastIndexOf(':') + 1))
+  let data = await fetch(`/tracks?songs=${songIds}`)
+  let songData = await data.json()
+  console.log(songData)
+
+  let newRecents = []
+  songData.body.tracks.forEach(song =>{
+    newRecents.push([song.name, song.artists[0].name, song.album.images[0].url])
+  })
+
+  let uploadRecents = await fetch(`/recents`, {method: 'POST', headers: {
+    'Content-Type': 'application/json;charset=utf-8'
+  }, body: JSON.stringify(newRecents)})
+}
 
 
 var canvas = document.getElementById('paint');
