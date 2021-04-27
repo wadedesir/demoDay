@@ -19,6 +19,10 @@
   /* --cc-1: #ffc451; */
 }
 
+html{
+  scroll-behavior: smooth;
+  selector { cursor: none; }
+}
 body {
   font-family: "Open Sans", sans-serif;
   color: #444444;
@@ -1062,6 +1066,10 @@ section {
   background-clip: text;
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
+
+  /* background: linear-gradient(-45deg, var(--cc-2), var(--cc-1)); */
+	background-size: 400% 400%;
+	animation: gradient 15s ease infinite;
 }
 
 #about h3{
@@ -1257,7 +1265,11 @@ svg {
 }
 
 .innerPageBody {
-  background-color: #bdf1ef;
+  /* background-color: #bdf1ef; */
+
+  /* background-image: url(../img/bgDots.jpg);
+  background-repeat: no-repeat;
+  background-size: cover; */
   color: white;
 }
 
@@ -1268,9 +1280,14 @@ svg {
 }
 
 .userPage {
-  margin-top: 5%;
+  background: linear-gradient(45deg, var(--cc-2), var(--cc-1));
+	background-size: 400% 400%;
+	animation: gradient 10s ease infinite;
+  margin-top: 2%;
+  padding: 3.5%;
   width: 100%;
-  background-color: #12cbc4;
+  /* background-color: #31cb12; */
+
   border: 3px solid #ffff;
   border-radius: 10px;
 }
@@ -1295,6 +1312,19 @@ svg {
   margin-left: 0;
   /* width: 10%; */
 }
+
+.featureCard{
+  font-family: 'museoModerno';
+  /* border: 1px solid white; */
+  border-radius: 5px;
+  padding: 1%;
+  height: 48%;
+  width: 100%;
+  background-color: rgba(255, 255, 255, 0.3);
+  /* color: black; */
+}
+
+
 
 .albumInfo {
   height: 75%;
@@ -1372,11 +1402,12 @@ svg {
   display: block;
 }
 
+
 .playCard {
   color: black;
   /* border: 1px solid black; */
-  width: 70%;
-  height: 50%;
+  width: 200%;
+  height: 30%;
   display: block;
   margin-bottom: 1%;
 
@@ -1393,6 +1424,7 @@ svg {
   justify-content: center;
   align-items: center;
   font-size: 20px;
+  font-weight: bold;
 }
 
 .playCard:hover {
@@ -1405,22 +1437,22 @@ svg {
   transition: all 0.2s ease-in;
   /* font-weight: bold; */
   /* margin-top: 50px; */
-
+  color: white;
+  font-weight: bold;
   background: linear-gradient(-45deg, #3f3d56, #9441fa, #12cbc4, #e92efb);
   background-size: 400% 400%;
   animation: gradient 5s ease infinite;
   cursor: pointer;
 }
 
-.playCard+.playCard {
-  margin-bottom: 0;
-  margin-top: 1%;
+.playCard i{
+  font-size: 2vw;
 }
 
 .listening {
   color: white;
-  border-top-left-radius: 5px;
-  border-bottom-left-radius: 5px;
+  /* border-top-left-radius: 5px; */
+  /* border-bottom-left-radius: 5px; */
   background: #3f3d56;
   /* border-right: 2px solid black; */
 }

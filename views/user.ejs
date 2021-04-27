@@ -16,9 +16,12 @@
   <!-- Google Fonts -->
   <link rel="preconnect" href="https://fonts.gstatic.com">
 
-  <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i|Raleway:300,300i,400,400i,500,500i,600,600i,700,700i|Poppins:300,300i,400,400i,500,500i,600,600i,700,700i" rel="stylesheet">
+  <link
+    href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i|Raleway:300,300i,400,400i,500,500i,600,600i,700,700i|Poppins:300,300i,400,400i,500,500i,600,600i,700,700i"
+    rel="stylesheet">
 
-  <link href="https://fonts.googleapis.com/css2?family=MuseoModerno:wght@200;300;400;500;600&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=MuseoModerno:wght@200;300;400;500;600&display=swap"
+    rel="stylesheet">
 
   <!-- Vendor CSS Files -->
   <link href="assets/vendor/aos/aos.css" rel="stylesheet">
@@ -32,12 +35,6 @@
   <!-- Template Main CSS File -->
   <link href="assets/css/style.css" rel="stylesheet">
 
-  <!-- =======================================================
-  * Template Name: Gp - v4.1.0
-  * Template URL: https://bootstrapmade.com/gp-free-multipurpose-html-bootstrap-template/
-  * Author: BootstrapMade.com
-  * License: https://bootstrapmade.com/license/
-  ======================================================== -->
 </head>
 
 <body class="innerPageBody">
@@ -50,37 +47,50 @@
     <section class="inner-page">
 
       <div class="container d-flex justify-content-center">
-        <div class="row userPage">
 
-          <div class="col-sm-6 listening">
-            <h3>New Listening Session</h3>
-            <section>
-              <a href="/player">
+        <div class="row userPage d-flex justify-content-between">
+
+          <div class="col-sm-4 featuresLeft d-flex flex-column justify-content-around">
+            <div class="featureCard">
+              <h3>Recents</h3>
+              <section>
+                <p>Nothing to show yet. Get to listening!</p>
+              </section>
+            </div>
+
+            <div class="featureCard">
+              <h3>Favorites</h3>
+              <section>
+                <p>Nothing to show yet. Get to listening!</p>
+              </section>
+            </div>
+          </div>
+
+          <div class="col-sm-3 listening d-flex justify-content-center align-items-center">
+            <!-- <h3>New Listening Session</h3> -->
+            <!-- <section> -->
                 <div class="playCard">
-                  <p>Guided Listening</p>
-                  <i class="fas fa-play"></i>
+                  <p>New Session</p>
+                  <i class="bi bi-play-circle"></i>
                 </div>
-             </a>
-              <div class="playCard">
-                <p>Free Play</p>
-                <i class="fas fa-play"></i>
-              </div>
-            </section>
+            <!-- </section> -->
 
           </div>
+          
+          <div class="col-sm-4 featuresRight d-flex flex-column justify-content-around">
+            <div class="featureCard">
+              <h3>Sketches</h3>
+              <section>
+                <p>Nothing to show yet. Get to listening!</p>
+              </section>
+            </div>
 
-          <div class="col-sm-3 userRecents">
-            <h3>Recents</h3>
-            <section>
-              <p>Nothing to show yet. Get to listening!</p>
-            </section>
-          </div>
-
-          <div class="col-sm-3 userfavorites">
-            <h3>Favorites</h3>
-            <section>
-              <p>Nothing to show yet. Get to listening!</p>
-            </section>
+            <div class="featureCard">
+              <h3>Favorites</h3>
+              <section>
+                <p>Nothing to show yet. Get to listening!</p>
+              </section>
+            </div>
           </div>
 
         </div>
@@ -92,11 +102,12 @@
   </main><!-- End #main -->
 
   <!-- ======= Footer ======= -->
-<%- include('partials/footer') %>
-<!-- End Footer -->
+  <!-- %- include('partials/footer')  -->
+  <!-- End Footer -->
 
   <div id="preloader"></div>
-  <a href="#" class="back-to-top d-flex align-items-center justify-content-center"><i class="bi bi-arrow-up-short"></i></a>
+  <a href="#" class="back-to-top d-flex align-items-center justify-content-center"><i
+      class="bi bi-arrow-up-short"></i></a>
 
   <!-- Vendor JS Files -->
   <script src="assets/vendor/aos/aos.js"></script>
