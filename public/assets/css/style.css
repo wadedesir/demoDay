@@ -1322,14 +1322,23 @@ svg {
   width: 100%;
   background-color: rgba(255, 255, 255, 0.3);
   /* color: black; */
+  /* position: relative; */
+  overflow: hidden;
 }
-.featureCard section{
+.cards{
   overflow-y: scroll;
-}
-.recentItems{
+  border-bottom-left-radius: 5px;
+  border-bottom-left-radius: 5px;
 
 }
-.recentItems img{
+.recentItem{
+  background-color:transparent;
+  height: 150px;
+  width: 100%;
+  border: 1px solid black;
+  padding-bottom: 15px;
+}
+.recentItem img{
   max-width: 30%;
 }
 
@@ -1385,6 +1394,13 @@ svg {
   height: 15%;
   border: 1px solid green;
 } */
+.nowPlayingImg{
+  height: 230px;
+  width: 230px;
+  border-radius: 50%;
+  /* border: 1px solid white; */
+  background: white;
+}
 .controlWrapper {
   /* height: 80%; */
   height: 15%;
@@ -1392,9 +1408,21 @@ svg {
   border: 1px solid #18d26e;
 }
 
+
 /* https://codepen.io/HarryGateaux/pen/BApxl */
 .activity{
-  border: 1px solid red;
+  /* border: 1px solid red; */
+}
+.activity .btn{
+  color: white;
+  font-weight: bold;
+  width: 100px;
+  height: 50px;
+}
+
+.activity .btn:hover{
+  background: transparent;
+  border: 4px solid white;
 }
 
 #settings {
@@ -1413,6 +1441,73 @@ svg {
   display: block;
 }
 
+.colors{
+  width: 30px;
+  height: 8px;
+}
+.colors:hover{
+  border: 1px solid white;
+}
+.colors:nth-child(1){
+  background-color: blue;
+}
+.colors:nth-child(2){
+  background-color: red;
+}
+.colors:nth-child(3){
+  background-color: green;
+}
+.colors:nth-child(4){
+  background-color: black;
+}
+
+ .eraser{
+  background: transparent;
+  border: none;
+  color: white;
+  font-size: 30px;
+}
+.eraser:hover{
+  color: black;
+}
+
+#brushes{
+  /* border: 1px solid black; */
+  display: flex;
+  align-items: center;
+  /* height: 20px; */
+  width: 25%;
+}
+
+.brush:hover{
+  border: 1px solid black;
+}
+.brush{
+
+  border-radius: 50%;
+  border: none;
+  outline: none;
+  background-color: white;
+}
+.brush:nth-child(1){
+  width: 12px;
+  height: 12px;
+}
+.brush:nth-child(2){
+  /* background-color: red; */
+  width: 15px;
+  height: 15px;
+}
+.brush:nth-child(3){
+  /* background-color: green; */
+  width: 20px;
+  height: 20px;
+}
+.brush:nth-child(4){
+  /* background-color: black; */
+  width: 25px;
+  height: 25px;
+}
 
 .playCard {
   color: black;

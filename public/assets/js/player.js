@@ -101,8 +101,8 @@ let ctx = canvas.getContext('2d');
  
 let sketch = document.getElementById('sketch');
 let sketch_style = getComputedStyle(sketch);
-canvas.width = 500;
-canvas.height = 250;
+canvas.width = 750;
+canvas.height = 375;
 
 let mouse = {x: 0, y: 0};
  
@@ -150,5 +150,12 @@ async function saveSketch(){
     ctx.clearRect(0, 0, ctx.canvas.width, ctx.canvas.height);
   }
 
+}
+
+async function clearSketch(){
+  // let dataURL = canvas.toDataURL();
+  ctx.clearRect(0, 0, ctx.canvas.width, ctx.canvas.height);
 
 }
+
+

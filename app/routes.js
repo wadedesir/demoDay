@@ -150,8 +150,8 @@ function setupRoutes(app, passport, SpotifyWebApi) {
 
 
   app.get('/user', isLoggedIn, function (req, res) {
-    console.log(req.user.songData.recents);
-    console.log(req.user.activities.sketches);
+    // console.log(req.user.songData.recents);
+    // console.log(req.user.activities.sketches);
     res.render('user.ejs', {
       loggedIn: true,
       user: req.user.name.first,
