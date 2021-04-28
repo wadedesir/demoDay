@@ -220,7 +220,6 @@ h6 {
 */
 .navbar {
   padding: 0;
-
 }
 
 .navbar ul {
@@ -1140,6 +1139,7 @@ section {
   /* background:  whitesmoke; */
   /* color: white; */
   height: 100%;
+  /* width: 100%; */
 }
 
 .formHide {
@@ -1323,7 +1323,15 @@ svg {
   background-color: rgba(255, 255, 255, 0.3);
   /* color: black; */
 }
+.featureCard section{
+  overflow-y: scroll;
+}
+.recentItems{
 
+}
+.recentItems img{
+  max-width: 30%;
+}
 
 
 .albumInfo {
@@ -1388,6 +1396,7 @@ svg {
 .activity{
   border: 1px solid red;
 }
+
 #settings {
   display: block;
   text-align: center
@@ -1395,8 +1404,10 @@ svg {
 
 
 #paint {
-  border: 1px solid black;
-  background: #333333;
+  /* border: 1px solid black; */
+  /* background: #333333; */
+  border: var(--cc-2);
+  background-color: white;
   margin-left: auto;
   margin-right: auto;
   display: block;

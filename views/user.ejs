@@ -53,15 +53,32 @@
           <div class="col-sm-4 featuresLeft d-flex flex-column justify-content-around">
             <div class="featureCard">
               <h3>Recents</h3>
-              <section>
+              <section class="">
+                <% if(recents) { %>
+                  <% for(i = 0; i < 10; i++) { %>
+                  <div class="recentItem row">
+                    <span class="recentSong"><%= recents[i][0] %></span>
+                    <img src="<%= recents[i][2] %>" alt="">
+                  </div>
+                  <% } %>
+
+                <% } else {%>
+                  <p>Nothing to show yet. Get to listening!</p>
+                <% } %>
+
                 <p>Nothing to show yet. Get to listening!</p>
+
               </section>
             </div>
 
             <div class="featureCard">
               <h3>Favorites</h3>
               <section>
-                <p>Nothing to show yet. Get to listening!</p>
+                <% if(loggedIn) { %>
+                  
+                <% } else {%>
+                  <p>Nothing to show yet. Get to listening!</p>
+                <% } %>
               </section>
             </div>
           </div>
@@ -81,14 +98,22 @@
             <div class="featureCard">
               <h3>Sketches</h3>
               <section>
-                <p>Nothing to show yet. Get to listening!</p>
+                <% if(loggedIn) { %>
+                  
+                <% } else {%>
+                  <p>Nothing to show yet. Get to listening!</p>
+                <% } %>
               </section>
             </div>
 
             <div class="featureCard">
               <h3>Favorites</h3>
               <section>
-                <p>Nothing to show yet. Get to listening!</p>
+                <% if(loggedIn) { %>
+                  
+                <% } else {%>
+                  <p>Nothing to show yet. Get to listening!</p>
+                <% } %>
               </section>
             </div>
           </div>

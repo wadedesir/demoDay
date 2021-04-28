@@ -47,7 +47,7 @@
       <div class="container d-flex justify-content-center">
         <div class="row userPage">
 
-          <div class="col-sm-6 listening ">
+          <div class="col-sm-3 listening ">
             <!-- <a href="/player"> -->
             <section>
 
@@ -83,25 +83,26 @@
 
 
           <!-- https://codepen.io/HarryGateaux/pen/BApxl -->
-          <div class="col-sm-6 activity">
+          <div class="activity col-sm-9 d-flex flex-column justify-content-center align-items-center">
+
             <div id="sketch">
               <canvas id="paint"></canvas>
             </div>
             
-            <div id="settings"> Colours
-              <button onclick="getColor('blue');">Blue</button>
-              <button onclick="getColor('red');">Red</button>
-              <button onclick="getColor('green');">Green</button>
-              <button onclick="getColor('white');">White</button>
-              <button onclick="getColor('#333333');">Eraser</button>
+            <div id="settings"> Colors
+              <button class='colors' onclick="getColor('blue');">Blue</button>
+              <button class='colors' onclick="getColor('red');">Red</button>
+              <button class='colors' onclick="getColor('green');">Green</button>
+              <button class='colors' onclick="getColor('black');">black</button>
+              <button class='colors' onclick="getColor('white');">Eraser</button>
             </div>
             
             <div id="settings"> Brush Size
-              <button onclick="getSize('2');">Small</button>
-              <button onclick="getSize('5');">Med</button>
-              <button onclick="getSize('10');">Large</button>
-              <button onclick="getSize('20');">X Large</button>
-              <button onclick="saveSketch();">Img</button>
+              <button class='brush' onclick="getSize('2');">Small</button>
+              <button class='brush' onclick="getSize('5');">Med</button>
+              <button class='brush' onclick="getSize('10');">Large</button>
+              <button class='brush' onclick="getSize('20');">X Large</button>
+              <button class='brush' onclick="saveSketch();">Img</button>
             </div>
           </div>
 
@@ -115,7 +116,7 @@
   </main><!-- End #main -->
 
   <!-- ======= Footer ======= -->
-<%- include('partials/footer') %>
+<!-- %- include('partials/footer') % -->
 <!-- End Footer -->
 
   <div id="preloader"></div>
