@@ -187,15 +187,15 @@ function toggleBtn(){
 # Drawing
 --------------------------------------------------------------*/
 
-let canvas = document.getElementById('paint');
-let ctx = canvas.getContext('2d');
+var canvas = document.getElementById('paint');
+var ctx = canvas.getContext('2d');
  
-let sketch = document.getElementById('sketch');
-let sketch_style = getComputedStyle(sketch);
+var sketch = document.getElementById('sketch');
+var sketch_style = getComputedStyle(sketch);
 canvas.width = 750;
 canvas.height = 375;
 
-let mouse = {x: 0, y: 0};
+var mouse = {x: 0, y: 0};
  
 /* Mouse Capturing Work */
 canvas.addEventListener('mousemove', function(e) {
@@ -227,20 +227,20 @@ canvas.addEventListener('mouseup', function() {
     canvas.removeEventListener('mousemove', onPaint, false);
 }, false);
  
-let onPaint = function() {
+var onPaint = function() {
     ctx.lineTo(mouse.x, mouse.y);
     ctx.stroke();
 };
 
 async function saveSketch(){
-  let dataURL = canvas.toDataURL();
+  var dataURL = canvas.toDataURL();
 
   if(confirm('Are you sure you want to save? This sketchad will be reset after drawing has been saved to your account.')){
     // let save = await fetch(`/saveSketch?sketch=${dataURL}`, {method: 'POST'})
-    let save = await fetch(`/saveSketch`, {method: 'POST', headers: {
+    var save = await fetch(`/saveSketch`, {method: 'POST', headers: {
       'Content-Type': 'application/json;charset=utf-8'
     }, body: JSON.stringify({sketch: dataURL})})
-    let result = save.json()
+    var result = save.json()
     ctx.clearRect(0, 0, ctx.canvas.width, ctx.canvas.height);
   }
 
