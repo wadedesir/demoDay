@@ -1668,6 +1668,12 @@ svg {
   background-color: #12d0d4;
 }
 
+@media screen and (max-width: 768px) {
+  .homePgBtn{
+    margin-bottom: 6%;
+  }
+}
+
 @keyframes gradient {
   0% {
     background-position: 0% 50%;
