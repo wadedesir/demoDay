@@ -130,6 +130,9 @@ async function submitSongs(){
     if(trackSeeds.length < 1 || artistSeeds.length < 1){
         alert("Please select provide at least one song and artist.")
         return
+    }else if(artistSeeds.length < 2){
+        alert("Please provide one more artist.")
+        return
     }
 
     if(addedFeatures >= 5){

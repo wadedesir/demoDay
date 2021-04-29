@@ -147,20 +147,21 @@ function duatone(app, duatonePlayer, User) {
         res.json("success")
     })
 
-    app.get('/queue', isLoggedIn, async function (req, res) {
-        console.log(req.user.songData.artists);
-        console.log(req.user.songData.songs);
+    app.get('/queue', isLoggedIn, async function (req, res) { 
+        // let artist1 = Math.
         ///shuffing algrithm:
         //https://stackoverflow.com/questions/19269545/how-to-get-a-number-of-random-elements-from-an-array
-
+        let randArtists = req.user.songData.artists.sort(() => 0.5 - Math.random());
+        let randSong = req.user.songData.songs.sort(() => 0.5 - Math.random());
+        let randArtistSeeds = [randArtists[0], randArtists[1]]
         let recs = []
 
         recs[0] = await duatonePlayer.getRecommendations({
                 limit: 5,
                 target_energy: 0.1,
                 target_tempo: 0.1,
-                seed_artists: req.user.songData.artists,
-                seed_tracks: req.user.songData.songs,
+                seed_artists: randArtistSeeds,
+                seed_tracks: randSong[0],
                 min_popularity: 30
             })
             .catch(err => console.log(err))
@@ -168,8 +169,8 @@ function duatone(app, duatonePlayer, User) {
                 limit: 5,
                 target_energy: 0.2,
                 target_tempo: 0.2,
-                seed_artists: req.user.songData.artists,
-                seed_tracks: req.user.songData.songs,
+                seed_artists: randArtistSeeds,
+                seed_tracks: randSong[0],
                 min_popularity: 40
             })
             .catch(err => console.log(err))
@@ -177,8 +178,8 @@ function duatone(app, duatonePlayer, User) {
                 limit: 5,
                 target_energy: 0.4,
                 target_tempo: 0.2,
-                seed_artists: req.user.songData.artists,
-                seed_tracks: req.user.songData.songs,
+                seed_artists: randArtistSeeds,
+                seed_tracks: randSong[0],
                 min_popularity: 40
             })
             .catch(err => console.log(err))
@@ -186,8 +187,8 @@ function duatone(app, duatonePlayer, User) {
                 limit: 5,
                 target_energy: 0.6,
                 target_tempo: 0.5,
-                seed_artists: req.user.songData.artists,
-                seed_tracks: req.user.songData.songs,
+                seed_artists: randArtistSeeds,
+                seed_tracks: randSong[0],
                 min_popularity: 40
             })
             .catch(err => console.log(err))
@@ -195,8 +196,8 @@ function duatone(app, duatonePlayer, User) {
             limit: 3,
             target_energy: 0.8,
             target_tempo: 0.7,
-            seed_artists: req.user.songData.artists,
-            seed_tracks: req.user.songData.songs,
+            seed_artists: randArtistSeeds,
+            seed_tracks: randSong[0],
             min_popularity: 40
         })
         .catch(err => console.log(err))
@@ -204,8 +205,8 @@ function duatone(app, duatonePlayer, User) {
                 limit: 5,
                 target_energy: 0.9,
                 target_tempo: 0.9,
-                seed_artists: req.user.songData.artists,
-                seed_tracks: req.user.songData.songs,
+                seed_artists: randArtistSeeds,
+                seed_tracks: randSong[0],
                 min_popularity: 40
             })
             .catch(err => console.log(err))
