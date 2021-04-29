@@ -87,7 +87,7 @@ function loadClear(){
   if(firstRun){
     document.querySelector('.spinny').style.display = 'block'
     document.querySelector('.spinnyText').style.display = 'none'
-    setTimeout(function(){ loadMedia() }, 4500);
+    setTimeout(function(){ loadMedia() }, 6500);
   }
 }
 async function loadMedia(){
