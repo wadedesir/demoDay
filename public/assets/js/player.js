@@ -5,7 +5,9 @@ document.querySelector('#play').addEventListener('click', playMedia)
 document.querySelector('#pause').addEventListener('click', pauseMedia)
 // document.querySelector('.searchButton').addEventListener('click', searchMedia)
 let queue
+let sessionTime
 let firstRun = true
+let btnNotSet = true
 
 async function getToken(){
     const fetchToken = await fetch('/token');
@@ -41,7 +43,7 @@ window.onSpotifyWebPlaybackSDKReady = () => {
     player.addListener('ready', ({ device_id }) => {
       console.log('Ready with Device ID', device_id);
       deviceId = device_id
-      fetch('/initializePlayer');
+      playerReady()
         
     });
   
@@ -54,29 +56,87 @@ window.onSpotifyWebPlaybackSDKReady = () => {
     player.connect();
   };
 
-async function loadMedia(){
+async function playerReady(){
+  let initialize = await fetch('/initializePlayer');
+  let result = initialize.json()
+  .catch(err => console.log(err))
   const queueData = await fetch('/queue');
   queue = await queueData.json()
+  .catch(err => console.log(err))
+  console.log(queue)
+}
+
+
+
+function setQueue(newTime){
+  sessionTime = newTime
+  btnNotSet = false
+  // sessionQueue = queue
+  console.log("time", sessionTime)
+  // console.log(sessionQueue);
+  // Math.floor(Math.random() * (max - min + 1) + min);
+
+
+  // console.log(sessionQueue)
+}
+
+function loadClear(){
+  if(btnNotSet){
+    return alert("Please select a time frame.")
+  }
+  if(firstRun){
+    document.querySelector('.spinny').style.display = 'block'
+    document.querySelector('.spinnyText').style.display = 'none'
+    setTimeout(function(){ loadMedia() }, 4500);
+  }
+}
+async function loadMedia(){
+  let sessionQueue = queue
+  if (sessionTime == 15){
+    while (sessionQueue.length > 5){
+      let remove = Math.floor(Math.random() * ((queue.length - 1) - 1 + 1) + 1);
+      sessionQueue.splice(remove, 1)
+    }
+  }else if((sessionTime == 25)){
+    while (sessionQueue.length > 6){
+      let remove = Math.floor(Math.random() * ((queue.length - 1) - 1 + 1) + 1);
+      sessionQueue.splice(remove, 1)
+    }
+  }else if((sessionTime == 30)){
+    while (sessionQueue.length > 9){
+      let remove = Math.floor(Math.random() * ((queue.length - 2) - 2 + 1) + 2);
+      sessionQueue.splice(remove, 1)
+    }
+  }else if((sessionTime == 45)){
+    while (sessionQueue.length > 11){
+      let remove = Math.floor(Math.random() * ((queue.length - 2) - 2 + 1) + 2);
+      sessionQueue.splice(remove, 1)
+    }
+  }else if((sessionTime == 60)){
+    while (sessionQueue.length > 15){
+      let remove = Math.floor(Math.random() * ((queue.length - 2) - 3 + 1) + 3);
+      sessionQueue.splice(remove, 1)
+    }
+  }
+  console.log('length', sessionQueue.length)
+  console.log(sessionQueue)
   console.log('length', queue.length)
 //   songDataSingles = queue.filter(function(item, pos) {
 //     return queue.indexOf(item) == pos;
 // })
 
 //  console.log("length", songDataSingles.length)
-  songId = queue.map(songUri => songUri.slice(songUri.lastIndexOf(':') + 1))
+  songId = sessionQueue.map(songUri => songUri.slice(songUri.lastIndexOf(':') + 1))
   console.log(songId)
   addRecents(songId)
-  fetch(`/play?tracks=${queue}`)
-  firstRun = false
+  fetch(`/play?tracks=${sessionQueue}`)
+  document.querySelector('.setupModal').style.display = 'none'
+  // firstRun = false
 }
 
 async function playMedia(){
-  
-  if (firstRun){
-    loadMedia()
-  }else{
+
     fetch(`/play`);
-  }
   // console.log(play)
   // console.log(queue)
 }
@@ -175,14 +235,14 @@ let onPaint = function() {
 async function saveSketch(){
   let dataURL = canvas.toDataURL();
 
-  // if(confirm('Are you sure you want to save? This sketchad will be reset after drawing has been saved to your account.')){
-  //   // let save = await fetch(`/saveSketch?sketch=${dataURL}`, {method: 'POST'})
-  //   let save = await fetch(`/saveSketch`, {method: 'POST', headers: {
-  //     'Content-Type': 'application/json;charset=utf-8'
-  //   }, body: JSON.stringify({sketch: dataURL})})
-  //   let result = save.json()
-  //   ctx.clearRect(0, 0, ctx.canvas.width, ctx.canvas.height);
-  // }
+  if(confirm('Are you sure you want to save? This sketchad will be reset after drawing has been saved to your account.')){
+    // let save = await fetch(`/saveSketch?sketch=${dataURL}`, {method: 'POST'})
+    let save = await fetch(`/saveSketch`, {method: 'POST', headers: {
+      'Content-Type': 'application/json;charset=utf-8'
+    }, body: JSON.stringify({sketch: dataURL})})
+    let result = save.json()
+    ctx.clearRect(0, 0, ctx.canvas.width, ctx.canvas.height);
+  }
 
 }
 

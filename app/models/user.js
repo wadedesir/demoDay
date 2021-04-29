@@ -27,7 +27,8 @@ const userSchema = mongoose.Schema({
   songData : {
     artists: [],
     songs: [],
-    recents: [ [] ] 
+    recents: [ [] ],
+    pastSessions : [ [] ] 
   },
   activities : {
     sketches: []

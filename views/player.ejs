@@ -47,7 +47,28 @@
       <div class="container d-flex justify-content-center">
         
         <div class="setupModal userPage">
+          <h1>Let's get started!</h1>
 
+          <div>
+            <p class="playerText">Welcome to the duatone player <%= user.trim() %>. To properly tune your experience we require you to provide an approximate listening time. As you listen, draw along to keep your mind occupied and off of whatever may be happening in your life right now, or just lay back, relax, and let the music seep in.</p>
+            <h4 class="mt-4">How long do you want to listen? (minutes): </h4> 
+            <button class="btn playerBtn" onclick="setQueue(15);">15</button> <button class="btn playerBtn" onclick="setQueue(25);">25</button> <button class="btn playerBtn" onclick="setQueue(30);">30</button> <button class="btn playerBtn" onclick="setQueue(45);">45</button> <button class="btn playerBtn" onclick="setQueue(60);">60</button>
+            <br>  
+            <button class="mt-4 btn playerBtn nextBtn d-flex justify-content-center align-items-center" onclick="loadClear();">
+              <div class="spinner-border spinny" role="status">
+                <span class="sr-only"></span>
+              </div>
+              <span class="spinnyText">Play</span>
+          </button>
+            <!-- <br>
+            <h3 class="">How do you feel right now?</h3>
+            <br>
+            <i class="bi bi-emoji-frown-fill"></i> <i class="bi bi-emoji-neutral-fill"></i> <i class="bi bi-emoji-smile-fill"></i>
+            <br>
+            <h3>How do you want to feel?</h3>
+            <br>
+            <i class="bi bi-emoji-frown-fill"></i> <i class="bi bi-emoji-neutral-fill"></i> <i class="bi bi-emoji-smile-fill"></i> -->
+          </div>
         </div>
         <div class="row userPage playerActive">
 
@@ -64,8 +85,8 @@
               </div>
 
               <div class="controlWrapper">
-                  <i id='play' class="bi bi-play-circle" onclick="toggleBtn();"></i>
-                  <i id='pause' class="hideControl bi bi-pause-circle" onclick="toggleBtn();"></i>
+                  <i id='play' class="hideControl bi bi-play-circle" onclick="toggleBtn();"></i>
+                  <i id='pause' class="bi bi-pause-circle" onclick="toggleBtn();"></i>
               </div>
 
             </section>
@@ -96,7 +117,7 @@
             </div>
 
             <div class="mt-3">
-              <button class='btn btn-outline-dark' onclick="saveSketch();">save</button>
+              <!-- <button class='btn btn-outline-dark' onclick="saveSketch();">save</button> -->
               <button class='btn btn-outline-dark' onclick="clearSketch();">clear</button>
 
             </div>

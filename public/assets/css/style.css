@@ -1463,6 +1463,30 @@ svg {
   background: transparent;
   border: 4px solid white;
 }
+.playerBtn{
+  width: 100px;
+  height: 50px;
+  border: 2px solid white;
+}
+.playerBtn:hover{
+  color: white;
+  font-weight: bold;
+  background-color: transparent;
+}
+.spinny{
+  display: none;
+}
+.playerBtn span{
+ color: inherit; 
+}
+.nextBtn{
+  float: right;
+  color: white;
+}
+.nextBtn:hover{
+  background-color: white;
+  color: black;
+}
 
 #settings {
   display: block;
@@ -1550,12 +1574,10 @@ svg {
 }
 
 .welcomeMessage span{
-  /* padding-bottom: 100px; */
-  position: absolute;
-
-  top:50px;
-  right: 42px;
+  font-family: 'museoModerno';
+  font-size: 18px;
 }
+
 .container .setupModal{
   position: fixed;
   background-color: white;
@@ -1564,7 +1586,19 @@ svg {
   top: 13%;
   z-index: 5;
 }
+.playerText{
+  font-size: 18px;
+  width: 70%;
+  margin-top: 2%;
+  line-height: 2;
+}
 
+@media screen and (max-width: 760px){
+  .playerText{
+    width: 100%;
+    font-size: 14px;
+  }
+}
 .playCard {
   color: black;
   /* border: 1px solid black; */

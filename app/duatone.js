@@ -240,7 +240,9 @@ function duatone(app, duatonePlayer, User) {
 
     app.post('/recents', isLoggedIn, async function (req, res) {
         let recents = req.user.songData.recents
-        recents = recents.concat(req.body)
+        console.log(recents)
+        console.log(req.body)
+        recents = req.body.concat(recents)
 
         const user = await User.findById(req.user._id)
         console.log(req.body)
