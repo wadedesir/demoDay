@@ -156,7 +156,7 @@ function setupRoutes(app, passport, SpotifyWebApi) {
       loggedIn: true,
       user: req.user.name.first,
       recents: req.user.songData.recents,
-      activities: req.user.activities.sketches
+      sketches: req.user.activities.sketches
     });
     
   })

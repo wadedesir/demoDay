@@ -1318,7 +1318,7 @@ svg {
   /* border: 1px solid white; */
   border-radius: 5px;
   padding: 1%;
-  height: 48%;
+  height: 100%;
   width: 100%;
   background-color: rgba(255, 255, 255, 0.3);
   /* color: black; */
@@ -1333,13 +1333,44 @@ svg {
 }
 .recentItem{
   background-color:transparent;
-  height: 150px;
-  width: 100%;
-  border: 1px solid black;
-  padding-bottom: 15px;
+  height: 130px;
+  width: 90%;
+  border: 1px solid white;
+  border-radius: 5px;
+  margin-bottom: 15px;
+  padding: 5px;
+}
+.sketchItem{
+  background-color:transparent;
+  height: 130px;
+  width: 90%;
+  border: 1px solid white;
+  border-radius: 5px;
+  /* margin-bottom: 15px; */
+  /* padding: 5px; */
+}
+.recentItem:nth-child(1){
+  /* margin-top: 135%; */
+  margin-top:60%;
 }
 .recentItem img{
-  max-width: 30%;
+  max-width: 35%;
+  display: inline-block;
+  /* float: right; */
+}
+.recentItem div{
+  width: 58%;
+}
+.recentItem span{
+  /* position: relative; */
+  /* float: right; */
+  /* top: 40px; */
+  /* left: -50px; */
+  /* display: inline-block; */
+}
+.recentItem span+span{
+  /* top: 60px; */
+  /* left: 10px; */
 }
 
 
@@ -1357,10 +1388,16 @@ svg {
 
 .controlWrapper {
   width: 40%;
+  font-size: 30px;
+  border: none;
 }
-
-.musicControls {}
-
+.controlWrapper i:hover{
+  color: var(--cc-1);
+  cursor: pointer;
+}
+.hideControl{
+  display: none;
+}
 .searchResults {
   height: 100%;
   /* border: 1px solid black; */
@@ -1394,19 +1431,21 @@ svg {
   height: 15%;
   border: 1px solid green;
 } */
+#playerContainer{
+  /* border: 1px solid white; */
+  height: 100%;
+  width: 100%;
+}
 .nowPlayingImg{
-  height: 230px;
-  width: 230px;
+  height: 200px;
+  width: 200px;
+  background-position: center;
+  background-size: cover;
   border-radius: 50%;
   /* border: 1px solid white; */
   background: white;
 }
-.controlWrapper {
-  /* height: 80%; */
-  height: 15%;
-  width: 100%;
-  border: 1px solid #18d26e;
-}
+
 
 
 /* https://codepen.io/HarryGateaux/pen/BApxl */
@@ -1434,11 +1473,12 @@ svg {
 #paint {
   /* border: 1px solid black; */
   /* background: #333333; */
-  border: var(--cc-2);
+  border: 3px solid #3f3d56;
   background-color: white;
   margin-left: auto;
   margin-right: auto;
   display: block;
+  /* width: 100%; */
 }
 
 .colors{
@@ -1509,10 +1549,26 @@ svg {
   height: 25px;
 }
 
+.welcomeMessage span{
+  /* padding-bottom: 100px; */
+  position: absolute;
+
+  top:50px;
+  right: 42px;
+}
+.container .setupModal{
+  position: fixed;
+  background-color: white;
+  width: 80%;
+  height: 75%;
+  top: 13%;
+  z-index: 5;
+}
+
 .playCard {
   color: black;
   /* border: 1px solid black; */
-  width: 200%;
+  width: 100%;
   height: 30%;
   display: block;
   margin-bottom: 1%;
@@ -1557,9 +1613,9 @@ svg {
 
 .listening {
   color: white;
-  /* border-top-left-radius: 5px; */
-  /* border-bottom-left-radius: 5px; */
+  position: relative;
   background: #3f3d56;
+  /* border: 3px solid rgba(255, 255, 255, 0.349); */
   /* border-right: 2px solid black; */
 }
 

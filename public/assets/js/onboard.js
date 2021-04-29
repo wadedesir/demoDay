@@ -127,6 +127,11 @@ function addData(event){
 }
 
 async function submitSongs(){
+    if(trackSeeds.length < 1 || artistSeeds.length < 1){
+        alert("Please select provide at least one song and artist.")
+        return
+    }
+
     if(addedFeatures >= 5){
         
         let sendData = await fetch(`/seed?artists=${artistSeeds}&tracks=${trackSeeds}`, {method: 'POST'})

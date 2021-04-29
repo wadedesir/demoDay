@@ -16,11 +16,16 @@ async function getToken(){
 // const deviceId
 const token = getToken()
 
+/*--------------------------------------------------------------
+# Player initialization
+--------------------------------------------------------------*/
+let player //allow player to be viewed globally
 window.onSpotifyWebPlaybackSDKReady = () => {
     
-    const player = new Spotify.Player({
+    player = new Spotify.Player({
       name: 'Duatone Player',
-      getOAuthToken: cb => { cb(token); }
+      getOAuthToken: cb => { cb(token); },
+      volume: 0.5
     });
   
     // Error handling
@@ -30,7 +35,7 @@ window.onSpotifyWebPlaybackSDKReady = () => {
     player.addListener('playback_error', ({ message }) => { console.error(message); });
   
     // Playback status updates
-    player.addListener('player_state_changed', state => { console.log(state); });
+    player.addListener('player_state_changed', state => { updateViews(state) });
   
     // Ready
     player.addListener('ready', ({ device_id }) => {
@@ -52,6 +57,12 @@ window.onSpotifyWebPlaybackSDKReady = () => {
 async function loadMedia(){
   const queueData = await fetch('/queue');
   queue = await queueData.json()
+  console.log('length', queue.length)
+//   songDataSingles = queue.filter(function(item, pos) {
+//     return queue.indexOf(item) == pos;
+// })
+
+//  console.log("length", songDataSingles.length)
   songId = queue.map(songUri => songUri.slice(songUri.lastIndexOf(':') + 1))
   console.log(songId)
   addRecents(songId)
@@ -75,6 +86,11 @@ async function pauseMedia(){
   // console.log(pause)
 }
 
+async function generatePlaylist(){ 
+  
+}
+
+
 async function addRecents(queue){
   // let songIds = queue.map(songUri => songUri.slice(songUri.lastIndexOf(':') + 1))
   let data = await fetch(`/tracks?songs=${queue}`)
@@ -91,6 +107,21 @@ async function addRecents(queue){
   }, body: JSON.stringify(newRecents)})
 }
 
+function updateViews(state){
+  console.log(state)
+  let songTitle = document.querySelector('.songName')
+  let songArtist = document.querySelector('.songArtist')
+  let songArt = document.querySelector('.nowPlayingImg')
+
+  songTitle.innerText = state.track_window.current_track.name
+  songArtist.innerText = state.track_window.current_track.artists[0].name
+  songArt.style.backgroundImage = `url(${state.track_window.current_track.album.images[0].url})`
+}
+
+function toggleBtn(){
+  document.querySelector('#play').classList.toggle('hideControl')
+  document.querySelector('#pause').classList.toggle('hideControl')
+}
 
 /*--------------------------------------------------------------
 # Drawing
@@ -144,11 +175,14 @@ let onPaint = function() {
 async function saveSketch(){
   let dataURL = canvas.toDataURL();
 
-  if(confirm('Are you sure you want to save? This sketchad will be reset after drawing has been saved to your account.')){
-    let save = await fetch(`/saveSketch?sketch=${dataURL}`, {method: 'POST'})
-    let result = save.json()
-    ctx.clearRect(0, 0, ctx.canvas.width, ctx.canvas.height);
-  }
+  // if(confirm('Are you sure you want to save? This sketchad will be reset after drawing has been saved to your account.')){
+  //   // let save = await fetch(`/saveSketch?sketch=${dataURL}`, {method: 'POST'})
+  //   let save = await fetch(`/saveSketch`, {method: 'POST', headers: {
+  //     'Content-Type': 'application/json;charset=utf-8'
+  //   }, body: JSON.stringify({sketch: dataURL})})
+  //   let result = save.json()
+  //   ctx.clearRect(0, 0, ctx.canvas.width, ctx.canvas.height);
+  // }
 
 }
 

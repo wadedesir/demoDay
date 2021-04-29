@@ -101,7 +101,7 @@ function duatone(app, duatonePlayer, User) {
     })
 
     app.get('/play', isLoggedIn, async function (req, res) {
-        console.log('OUR URIS', req.query.tracks.split(','));
+        // console.log('OUR URIS', req.query.tracks.split(','));
         if (req.query.tracks) {
             const result = await duatonePlayer.play({
                     uris: req.query.tracks.split(',')
@@ -150,17 +150,75 @@ function duatone(app, duatonePlayer, User) {
     app.get('/queue', isLoggedIn, async function (req, res) {
         console.log(req.user.songData.artists);
         console.log(req.user.songData.songs);
-        recs = await duatonePlayer.getRecommendations({
+        ///shuffing algrithm:
+        //https://stackoverflow.com/questions/19269545/how-to-get-a-number-of-random-elements-from-an-array
+
+        let recs = []
+
+        recs[0] = await duatonePlayer.getRecommendations({
                 limit: 5,
-                target_energy: 0.2,
+                target_energy: 0.1,
+                target_tempo: 0.1,
                 seed_artists: req.user.songData.artists,
                 seed_tracks: req.user.songData.songs,
-                min_popularity: 50
+                min_popularity: 30
             })
             .catch(err => console.log(err))
-        console.log(recs.body.tracks)
+        recs[1] = await duatonePlayer.getRecommendations({
+                limit: 5,
+                target_energy: 0.2,
+                target_tempo: 0.2,
+                seed_artists: req.user.songData.artists,
+                seed_tracks: req.user.songData.songs,
+                min_popularity: 40
+            })
+            .catch(err => console.log(err))
+        recs[2] = await duatonePlayer.getRecommendations({
+                limit: 5,
+                target_energy: 0.4,
+                target_tempo: 0.2,
+                seed_artists: req.user.songData.artists,
+                seed_tracks: req.user.songData.songs,
+                min_popularity: 40
+            })
+            .catch(err => console.log(err))
+        recs[3] = await duatonePlayer.getRecommendations({
+                limit: 5,
+                target_energy: 0.6,
+                target_tempo: 0.5,
+                seed_artists: req.user.songData.artists,
+                seed_tracks: req.user.songData.songs,
+                min_popularity: 40
+            })
+            .catch(err => console.log(err))
+        recs[4] = await duatonePlayer.getRecommendations({
+            limit: 3,
+            target_energy: 0.8,
+            target_tempo: 0.7,
+            seed_artists: req.user.songData.artists,
+            seed_tracks: req.user.songData.songs,
+            min_popularity: 40
+        })
+        .catch(err => console.log(err))
+        recs[5] = await duatonePlayer.getRecommendations({
+                limit: 5,
+                target_energy: 0.9,
+                target_tempo: 0.9,
+                seed_artists: req.user.songData.artists,
+                seed_tracks: req.user.songData.songs,
+                min_popularity: 40
+            })
+            .catch(err => console.log(err))
+        // console.log(recs.body.tracks)
+        // recs[0].body.tracks = recs[0].body.tracks.sort(() => 0.5 - Math.random());
 
-        trackUris = recs.body.tracks.map(track => track.uri)
+
+        trackUris = recs.reduce( (acc,rec) => {
+            acc.push(rec.body.tracks.map(track => track.uri))
+            return acc
+        }, [])
+        trackUris = trackUris.flat()
+        // trackUris = recs.body.tracks.map(track => track.uri)
         // firstRunTracks = trackUris 
         res.json(trackUris)
         // res.redirect('/playStart')
@@ -200,21 +258,22 @@ function duatone(app, duatonePlayer, User) {
         res.json(sketches)
     })
 
-    app.post('/saveSketch', isLoggedIn, async function (req, res) {
-        let newSketch = req.query.sketch
-        let sketches = req.user.activities.sketches
-        sketches.push(newSketch)
+    // app.post('/saveSketch', isLoggedIn, async function (req, res) {
+    //     let newSketch = req.body.dataURL
+    //     console.log(req.body)
+    //     let sketches = req.user.activities.sketches
+    //     sketches.push(newSketch)
 
-        const user = await User.findById(req.user._id)
-        user.activities.sketches = sketches
-        const result = await user.save()
-            .then(result => {
-                res.json('success')
-            })
-            .catch(error => console.error(error))
+    //     const user = await User.findById(req.user._id)
+    //     user.activities.sketches = sketches
+    //     const result = await user.save()
+    //         .then(result => {
+    //             res.json('success')
+    //         })
+    //         .catch(error => console.error(error))
 
-        res.json('success')
-    })
+    //     res.json('success')
+    // })
 
     // app.get('/playStart', isLoggedIn, async function (req, res) {   
     //     const result = await duatonePlayer.play({uris: firstRunTracks})

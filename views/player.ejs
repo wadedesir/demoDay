@@ -45,45 +45,30 @@
     <section class="inner-page">
 
       <div class="container d-flex justify-content-center">
-        <div class="row userPage">
+        
+        <div class="setupModal userPage">
+
+        </div>
+        <div class="row userPage playerActive">
 
           <div class="col-sm-3 listening ">
-            <!-- <a href="/player"> -->
-            <section class="">
-              <!-- <div class="nowPlayingImg">
+            
+            <section id="playerContainer" class="d-flex flex=column align-items-center text-center">
+              
+              <div class="nowPlayingImg">
+              </div>
 
-              </div> -->
+              <div class="songInfo">
+                <p class="songName mt-4"></p>
+                <p class="songArtist"></p>
+              </div>
 
-              <!-- <div class=""> -->
-                <div id="play"class="playCard">
-                  <p>Start Listening</p>
-                  <i id='play' class="bi bi-play-circle"></i>
-                </div>
-                <div id="pause" class="playCard">
-                  <p>Guided Listening</p>
-                  <i id='pause' class="bi bi-pause-circle"></i>
-                </div>
-
-              <!-- </div> -->
+              <div class="controlWrapper">
+                  <i id='play' class="bi bi-play-circle" onclick="toggleBtn();"></i>
+                  <i id='pause' class="hideControl bi bi-pause-circle" onclick="toggleBtn();"></i>
+              </div>
 
             </section>
-           <!-- </a> -->
-            <!-- <div class="col-6 albumInfo">
-              <div class="albumArt">
-                Album
-              </div>
-              <div class="albumData">
-
-              </div>
-            </div>
-
-            <div class="col-6 controlWrapper">
-              <div class="musicControls">
-                <i></i>
-                <i></i>
-                <i></i>
-              </div>
-            </div> -->
 
           </div>
 
