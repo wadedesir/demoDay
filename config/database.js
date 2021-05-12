@@ -1,9 +1,10 @@
 // config/database.js
 module.exports = {
-    'url' : 'mongodb+srv://wadeMongo:wade2021@cluster0.uusdg.mongodb.net/moodchime?retryWrites=true&w=majority',
-    'dbName': 'moodchimeDB'
+    'url' : MONGODB_URI,
+    'dbName': 'duatoneDB'
 };
 
 /*
-heroku config:set MONGODB_URI="mongodb+srv://wadeMongo:wade2021@cluster0.uusdg.mongodb.net/moodTracker?retryWrites=true&w=majority"
+'url' : 'mongodb+srv://wadeMongo:wade2021@cluster0.uusdg.mongodb.net/duatone?retryWrites=true&w=majority',
+heroku config:set MONGODB_URI="mongodb+srv://wadeMongo:wade2021@cluster0.uusdg.mongodb.net/duatone?retryWrites=true&w=majority"
 */
