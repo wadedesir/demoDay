@@ -1,3 +1,5 @@
 node_modules
 Bootslander
 Bootslander.zip
+.env
+env_variables.yaml

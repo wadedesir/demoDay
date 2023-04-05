@@ -1,6 +1,6 @@
 // config/database.js
 module.exports = {
-    'url' : MONGODB_URI,
+    'url': process.env.DATABASE_URL,
     'dbName': 'duatoneDB'
 };
 

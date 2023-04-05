@@ -6,9 +6,9 @@ module.exports = setupRoutes;
 function setupRoutes(app, passport, SpotifyWebApi) {
 
   //duatone specific setup
-  let duatonePlayer, duatoneUser, authorizeURL
+  let duatonePlayer, authorizeURL
 
-  [duatonePlayer, duatoneUser, authorizeURL] = duatone.setup(SpotifyWebApi, User) //set duatone values returned frm duatone.js
+  [duatonePlayer, authorizeURL] = duatone.setup(SpotifyWebApi, User) //set duatone values returned frm duatone.js
 
   duatone.start(app, duatonePlayer, User)
 
@@ -61,7 +61,7 @@ function setupRoutes(app, passport, SpotifyWebApi) {
         .catch(err => {
           console.log('Something went wrong!', err);
         })
-
+      console.log(data)
       // Set the access token on the API object to use it in later calls
       duatonePlayer.setAccessToken(data.body['access_token']);
       duatonePlayer.setRefreshToken(data.body['refresh_token']);
@@ -79,7 +79,7 @@ function setupRoutes(app, passport, SpotifyWebApi) {
         })
         .catch(error => console.error(error))
 
-    } else { // first reun then have user connect
+    } else { // first run then have user connect
       res.render('connect.ejs', {
         loggedIn: true,
         user: req.user.name.first,
@@ -107,8 +107,7 @@ function setupRoutes(app, passport, SpotifyWebApi) {
 
       } else if (req.user.setup == 1) { //done onboarding but no spotify
         res.redirect('/connect')
-      } else {
-        // not logged in
+      } else { //no onboarding
         res.render('onboard.ejs', {
           loggedIn: true,
           user: ''
@@ -158,7 +157,7 @@ function setupRoutes(app, passport, SpotifyWebApi) {
       recents: req.user.songData.recents,
       sketches: req.user.activities.sketches
     });
-    
+
   })
 
   // LOGOUT ==============================

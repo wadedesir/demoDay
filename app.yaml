@@ -1,0 +1,7 @@
+# Copyright 2018, Google, Inc.
+# [START app_yaml]
+
+runtime: nodejs16
+includes:
+  - env_variables.yaml
+# [END app_yaml]

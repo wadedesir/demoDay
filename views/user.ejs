@@ -50,8 +50,8 @@
 
         <div class="row userPage d-flex justify-content-between">
 
-          <div class="col-sm-4 featuresLeft d-flex flex-column justify-content-around">
-            <div class="featureCard">
+          <div class="col-sm-4 my-2 order-1 order-sm-0 featuresLeft d-flex flex-column justify-content-around">
+            <div class="featureCard ">
               <h3>Recents</h3>
               <section class="cards">
                 <!-- <div> -->
@@ -92,7 +92,7 @@
             </div> -->
           </div>
 
-          <div class="col-sm-3 listening d-flex flex-column justify-content-around align-items-center">
+          <div class="col-sm-3 my-2 listening d-flex flex-column justify-content-around align-items-center">
             <!-- <h3>New Listening Session</h3> -->
             <!-- <section> -->
                 <div class="welcomeMessage text-center">
@@ -106,15 +106,15 @@
 
           </div>
           
-          <div class="col-sm-4 featuresRight d-flex flex-column justify-content-around">
+          <div class="col-sm-4 my-2 featuresRight d-flex flex-column justify-content-around">
             <div class="featureCard">
               <h3>Sketches</h3>
               <section>
                 <% if(sketches[0]) { %>
-                  <% sketches.forEach(sketch => { %>
+                  <% sketches.forEach((sketch, i) => { %>
                   <div class="sketchItem row d-flex flex-row justify-content-center">
                     <!-- <p><%= sketch %></p> -->
-                    <img src="" alt="">
+                    <img src="<%= sketch %>" alt="">
                     <!-- <div style="background-image:"></div> -->
                   </div>
                   <% }) %>

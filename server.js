@@ -1,22 +1,23 @@
 // set up ======================================================================
 // get all the tools we need
-const express  = require('express');
+const express = require('express');
 const bodyParser = require('body-parser')
-const app      = express();
-
+const app = express();
+require('dotenv').config()
+console.log(process.env)
 let port = process.env.PORT || 8080;
 
 const mongoose = require('mongoose');
 const passport = require('passport');
-const flash    = require('connect-flash');
+const flash = require('connect-flash');
 
-const morgan       = require('morgan');
+const morgan = require('morgan');
 const cookieParser = require('cookie-parser');
-const session      = require('express-session');
+const session = require('express-session');
 const SpotifyWebApi = require('spotify-web-api-node');
 
 const configDB = require('./config/database.js');
-const setupRoutes = require('./app/routes.js') 
+const setupRoutes = require('./app/routes.js')
 
 let db
 
@@ -40,13 +41,14 @@ app.use(express.json()); // get information from html forms
 app.use(express.urlencoded({ extended: true }));
 app.use(express.static('public'))
 
+app.set('trust proxy', true);
 app.set('view engine', 'ejs'); // set up ejs for templating
 
 // required for passport
 app.use(session({
-    secret: 'rcbootcamp2021a', // session secret
-    resave: true,
-    saveUninitialized: true
+  secret: 'rcbootcamp2021a', // session secret
+  resave: true,
+  saveUninitialized: true
 }));
 
 app.use(passport.initialize());

@@ -33,9 +33,7 @@ body {
 a {
   color: var(--cc-1);
   text-decoration: none;
-}
-
-a:hover {
+}a:hover {
   /* color: #ffd584; */
   color: var(--main-gradient-single-light);
   text-decoration: none;
@@ -1332,7 +1330,8 @@ svg {
   overflow-y: scroll;
   border-bottom-left-radius: 5px;
   border-bottom-left-radius: 5px;
-
+  height: 100%;
+  padding: 0%;
 }
 .recentItem{
   background-color:transparent;
@@ -1344,17 +1343,18 @@ svg {
   padding: 5px;
 }
 .sketchItem{
-  background-color:transparent;
-  height: 130px;
+  background-color:white;
+  /* height: 330px; */
   width: 90%;
   border: 1px solid white;
   border-radius: 5px;
-  /* margin-bottom: 15px; */
+  margin-bottom: 5px;
+  border-radius: 5px;
   /* padding: 5px; */
 }
 .recentItem:nth-child(1){
   /* margin-top: 135%; */
-  margin-top:60%;
+  margin-top:37%;
 }
 .recentItem img{
   max-width: 35%;
@@ -1440,9 +1440,9 @@ svg {
   width: 100%;
 }
 .nowPlayingImg{
-  height: 200px;
-  width: 200px;
-  background-position: center;
+  height: 220px;
+  width: 220px;
+  /* background-position:  */
   background-size: cover;
   border-radius: 50%;
   /* border: 1px solid white; */
@@ -1470,11 +1470,35 @@ svg {
   width: 100px;
   height: 50px;
   border: 2px solid white;
+  color: white;
+  transition: none;
+
+  /* padding: 0.375rem 0.75rem;
+  font-size: 1rem;
+  border-radius: 0.25rem;
+  user-select: none;
+  text-align: center;
+  text-decoration: none;
+  vertical-align: middle;
+  display: inline-block;
+  font-weight: 400;
+  line-height: 1.5;
+  outline: none; */
+}
+#playerSection{
+  display: none;
 }
 .playerBtn:hover{
   color: white;
   font-weight: bold;
-  background-color: transparent;
+  border-color: #5abdc9;
+  transition: none;
+}
+.playerBtn:focus{
+  color: white;
+  font-weight: bold;
+  background-color: #5abdc9;
+  transition: none;
 }
 .spinny{
   display: none;
@@ -1498,8 +1522,6 @@ svg {
 
 
 #paint {
-  /* border: 1px solid black; */
-  /* background: #333333; */
   border: 3px solid #3f3d56;
   background-color: white;
   margin-left: auto;
