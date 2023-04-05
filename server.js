@@ -25,13 +25,6 @@ let db
 
 app.use(bodyParser.urlencoded({ extended: true }))
 
-mongoose.connect(configDB.url, { useNewUrlParser: true, useUnifiedTopology: true }, (err, database) => {
-  if (err) return console.log(err)
-  db = database
-
-  setupRoutes(app, passport, SpotifyWebApi)
-}); // connect to our database
-
 require('./config/passport')(passport); // pass passport for configuration
 
 // set up our express application
@@ -58,7 +51,13 @@ app.use(flash()); // use connect-flash for flash messages stored in session
 
 
 // launch ======================================================================
-app.listen(port);
+mongoose.connect(configDB.url, { useNewUrlParser: true, useUnifiedTopology: true }, (err, database) => {
+  if (err) return console.log(err)
+  db = database
+
+  setupRoutes(app, passport, SpotifyWebApi)
+  app.listen(port);
+}); // connect to our database
 console.log('The magic happens on port ' + port);
 
 
